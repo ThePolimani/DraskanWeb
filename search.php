@@ -1,9 +1,9 @@
 <?php
 // 🔌 Connexion à la base de données
-$host = "localhost"; // À adapter
-$dbname = "ma_biere";
-$username = "root";
-$password = "";
+$host = "vamrosr800.mysql.db"; // À adapter
+$dbname = "vamrosr800";
+$username = "vamrosr800";
+$password = "SQLDBbiere64285";
 $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password, [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
