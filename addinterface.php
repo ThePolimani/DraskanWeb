@@ -4,6 +4,9 @@ require 'config.php'; // Fichier de configuration contenant la connexion à la b
 // Récupérer les catégories
 $categories = $pdo->query("SELECT id, nom FROM categories")->fetchAll(PDO::FETCH_ASSOC);
 
+// Récupérer les formats
+$formats = $pdo->query("SELECT id, nom FROM formats")->fetchAll(PDO::FETCH_ASSOC);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'] ?? '';
     $description = $_POST['description'] ?? '';
@@ -13,10 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image_url = $_POST['image_url'] ?? '';
     $stock = $_POST['stock'] ?? 0;
     $categorie_id = $_POST['categorie_id'] ?? null;
+    $format_id = $_POST['format_id'] ?? null;
 
-    if ($nom && $prix > 0 && $volume_ml > 0 && $alcool_pct >= 0 && $categorie_id) {
-        $stmt = $pdo->prepare("INSERT INTO produits (nom, description, prix, volume_ml, alcool_pct, image_url, stock, categorie_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$nom, $description, $prix, $volume_ml, $alcool_pct, $image_url, $stock, $categorie_id]);
+    if ($nom && $prix > 0 && $volume_ml > 0 && $alcool_pct >= 0 && $categorie_id && $format_id) {
+        $stmt = $pdo->prepare("INSERT INTO produits (nom, description, prix, volume_ml, alcool_pct, image_url, stock, categorie_id, format_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$nom, $description, $prix, $volume_ml, $alcool_pct, $image_url, $stock, $categorie_id, $format_id]);
         
         // Redirection pour éviter la soumission multiple
         header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
@@ -82,6 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="">Sélectionner une catégorie</option>
             <?php foreach ($categories as $categorie) : ?>
                 <option value="<?= $categorie['id'] ?>"><?= htmlspecialchars($categorie['nom']) ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <label>Format :</label>
+        <select name="format_id" required>
+            <option value="">Sélectionner un format</option>
+            <?php foreach ($formats as $format) : ?>
+                <option value="<?= $format['id'] ?>"><?= htmlspecialchars($format['nom']) ?></option>
             <?php endforeach; ?>
         </select>
 
