@@ -38,7 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         form { max-width: 400px; margin: auto; }
         label, input, select, textarea { display: block; width: 100%; margin-bottom: 10px; }
         button { background: #28a745; color: white; padding: 10px; border: none; cursor: pointer; }
-        .message { color: green; }
+        h2 { text-align: center; margin-top: 60px;}
+        .message { color: green; text-align: center;}
         .error { color: red; }
     </style>
 </head>
