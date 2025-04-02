@@ -9,7 +9,7 @@ $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $passw
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);
 
-// 🔍 Récupération des paramètres envoyés en GET
+// Récupération des paramètres envoyés en GET
 $mot_cle = isset($_GET['q']) ? trim($_GET['q']) : "";
 $categorie = isset($_GET['categorie']) ? intval($_GET['categorie']) : null;
 $format = isset($_GET['format']) ? intval($_GET['format']) : null;
@@ -23,7 +23,7 @@ $dispo = isset($_GET['dispo']) ? boolval($_GET['dispo']) : false; // 1 = en stoc
 $tri = isset($_GET['tri']) ? $_GET['tri'] : 'date_desc'; // Par défaut : tri par date d'ajout décroissante
 $limit = 10;
 
-// 📌 Construction de la requête SQL dynamique
+// Construction de la requête SQL dynamique
 $sql = "SELECT * FROM produits WHERE 1";
 
 // Recherche partielle si un mot-clé est fourni
@@ -63,7 +63,7 @@ $sql .= " ORDER BY " . ($triOptions[$tri] ?? "date_ajout DESC");
 // Limiter le nombre de résultats
 $sql .= " LIMIT :limit";
 
-// 📌 Exécution de la requête
+// Exécution de la requête
 $stmt = $pdo->prepare($sql);
 
 // Liaison des paramètres
@@ -87,7 +87,7 @@ $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
 $stmt->execute();
 $resultats = $stmt->fetchAll();
 
-// 🔄 Renvoi des résultats en JSON
+// Renvoi des résultats en JSON
 header('Content-Type: application/json');
 echo json_encode($resultats);
 
