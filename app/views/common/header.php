@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draskan</title>
+	<meta name="description" content="Draskan : La Nature au bout des lèvres. Voir la liste de nos produits.">
+	<meta name="keywords" content="Univ Note, Université, Login, Connexion">
+	<link rel="icon" href="public/images/draskan_logo_s.png" type="image/x-icon">
+	<link rel="icon" href="public/images/draskan_logo_s.png" type="image/x-icon" media="(prefers-color-scheme: dark)">
+	<link rel="stylesheet" href="public/styles/verifage.css">
+    <link rel="stylesheet" href="public/styles/style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <script src="public/scripts/verifage.js"></script>
+	<link rel="apple-touch-icon" href="/app-icon.png">
+</head>
+<body>
+    <div id="ageVerificationModal">
+        <div id="ageVerificationContent">
+            <h2>Vérification d'âge</h2>
+            <p>Pour accéder à notre site, veuillez confirmer votre âge:</p>
+            
+            <label for="birthMonth">Mois de naissance:</label>
+            <select id="birthMonth">
+                <option value="">-- Sélectionnez --</option>
+                <option value="0">Janvier</option>
+                <option value="1">Février</option>
+                <option value="2">Mars</option>
+                <option value="3">Avril</option>
+                <option value="4">Mai</option>
+                <option value="5">Juin</option>
+                <option value="6">Juillet</option>
+                <option value="7">Août</option>
+                <option value="8">Septembre</option>
+                <option value="9">Octobre</option>
+                <option value="10">Novembre</option>
+                <option value="11">Décembre</option>
+            </select>
+            
+            <label for="birthYear">Année de naissance:</label>
+            <select id="birthYear">
+                <option value="">-- Sélectionnez --</option>
+                <!-- Les options seront générées par JavaScript -->
+            </select>
+            
+            <div id="ageError" class="error"></div>
+            <button id="confirmAge">Confirmer</button>
+        </div>
+    </div>
+
+    <header>
+        <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil"></a>
+        <nav>
+            <a href="produits.html">Produits</a>
+            <a href="partenaires.html">Partenaires</a>
+            <a href="contact.html">Nous Contactez</a>
+        </nav>
+        <div id="tools">
+
+        </div>
+    </header>
