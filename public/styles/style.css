@@ -32,13 +32,12 @@ a:hover {
 /* HEADER */
 
 header {
-    background-color: #333;
+    background-color: #000;
     width: 100%;
     height: 80px;
     color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 header img {
@@ -47,38 +46,44 @@ header img {
     margin-left: 3vw;
 }
 
+header nav {
+    margin-left: auto;
+    display: flex;
+    gap: 30px;
+}
+
+#tools {
+
+}
+
 
 /* FOOTER */
 footer {
-    background-color: #333;
+    background-color: #000;
     width: 100%;
-    height: 150px;
+    height: 180px;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
 #footer-content {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin-top: 20px;
     width: 100%;
 }
 
 footer img {
     width: auto;
-    height: 70px;
+    height: 90px;
     margin-right: 3vw;
 }
 
-#footer-links {
+#footer-content div {
     display: flex;
     flex-direction: column;
-}
-
-#footer-socials {
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
 }
