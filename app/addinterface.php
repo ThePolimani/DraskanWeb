@@ -4,9 +4,6 @@ require 'config.php'; // Fichier de configuration contenant la connexion à la b
 // Récupérer les catégories
 $categories = $pdo->query("SELECT id, nom FROM categories")->fetchAll(PDO::FETCH_ASSOC);
 
-// Récupérer les formats
-$formats = $pdo->query("SELECT id, nom FROM formats")->fetchAll(PDO::FETCH_ASSOC);
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'] ?? '';
     $description = $_POST['description'] ?? '';
@@ -16,13 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image_url = $_POST['image_url'] ?? '';
     $stock = $_POST['stock'] ?? 0;
     $categorie_id = $_POST['categorie_id'] ?? null;
-    $format_id = $_POST['format_id'] ?? null;
+    $format = $_POST['format'] ?? '';
 
-    if ($nom && $prix > 0 && $volume_ml > 0 && $alcool_pct >= 0 && $categorie_id && $format_id) {
-        $stmt = $pdo->prepare("INSERT INTO produits (nom, description, prix, volume_ml, alcool_pct, image_url, stock, categorie_id, format_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$nom, $description, $prix, $volume_ml, $alcool_pct, $image_url, $stock, $categorie_id, $format_id]);
+    if ($nom && $prix > 0 && $volume_ml > 0 && $alcool_pct >= 0 && $categorie_id && $format) {
+        $stmt = $pdo->prepare("INSERT INTO produits (nom, description, prix, volume_ml, alcool_pct, image_url, stock, categorie_id, format) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$nom, $description, $prix, $volume_ml, $alcool_pct, $image_url, $stock, $categorie_id, $format]);
         
-        // Redirection pour éviter la soumission multiple
         header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
         exit;
     } else {
@@ -40,8 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         form { max-width: 400px; margin: auto; }
-        input, select { min-height: 30px;}
-        label, input, select, textarea { display: block; width: 100%; margin-bottom: 10px; }
+        input, select, textarea { display: block; width: 100%; margin-bottom: 10px; min-height: 30px; }
         button { background: #28a745; color: white; padding: 10px; border: none; cursor: pointer; }
         h2 { text-align: center; margin-top: 50px;}
         .message { color: green; text-align: center;}
@@ -90,12 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </select>
 
         <label>Format :</label>
-        <select name="format_id" required>
-            <option value="">Sélectionner un format</option>
-            <?php foreach ($formats as $format) : ?>
-                <option value="<?= $format['id'] ?>"><?= htmlspecialchars($format['nom']) ?></option>
-            <?php endforeach; ?>
-        </select>
+        <input type="text" name="format" required>
 
         <button type="submit">Ajouter</button>
     </form>
