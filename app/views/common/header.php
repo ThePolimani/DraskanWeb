@@ -7,8 +7,7 @@
     <title>Draskan</title>
 	<meta name="description" content="Draskan : La Nature au bout des lèvres. Voir la liste de nos produits.">
 	<meta name="keywords" content="Bière, Draskan, alcool, Bière Viking">
-	<link rel="icon" href="public/images/draskan_logo_s.png" type="image/x-icon">
-	<link rel="icon" href="public/images/draskan_logo_s.png" type="image/x-icon" media="(prefers-color-scheme: dark)">
+	<link rel="icon" href="public/images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="public/styles/verifage.css">
     <link rel="stylesheet" href="public/styles/style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
