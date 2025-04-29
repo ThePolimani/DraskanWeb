@@ -6,7 +6,7 @@
     <base href="<?= rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/' ?>"> <!-- Base URL dynamique pour les index -->
     <title>Draskan</title>
 	<meta name="description" content="Draskan : La Nature au bout des lèvres. Voir la liste de nos produits.">
-	<meta name="keywords" content="Univ Note, Université, Login, Connexion">
+	<meta name="keywords" content="Bière, Draskan, alcool, Bière Viking">
 	<link rel="icon" href="public/images/draskan_logo_s.png" type="image/x-icon">
 	<link rel="icon" href="public/images/draskan_logo_s.png" type="image/x-icon" media="(prefers-color-scheme: dark)">
 	<link rel="stylesheet" href="public/styles/verifage.css">
@@ -59,6 +59,8 @@
             <a href="contact.html">Nous Contactez</a>
         </nav>
         <div id="tools">
-
+            <input type="text" id="search" placeholder="Rechercher...">
+            <button id="searchButton">🔍</button>
+            <button><img src="public/images/panier.png" alt="Panier" title="Panier"></button>
         </div>
     </header>
