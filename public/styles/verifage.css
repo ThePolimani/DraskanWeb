@@ -28,7 +28,7 @@
     font-size: 20px;
 }
 
-select, button {
+select, #confirmAge {
     margin: 10px 0;
     padding: 8px;
     width: 100%;
@@ -36,14 +36,14 @@ select, button {
     height: 40px;
 }
 
-button {
+#confirmAge {
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
 }
 
-button:hover {
+#confirmAge:hover {
     background-color: #45a049;
 }
 
