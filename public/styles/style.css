@@ -95,6 +95,7 @@ footer img {
 #footer-socials img {
     height: 35px;
     margin: 0;
+    transition: 0.05s;
 }
 
 #footer-socials img:hover {
