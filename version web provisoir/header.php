@@ -61,6 +61,6 @@
             <input type="text" id="search" placeholder="Rechercher...">
             <button id="searchButton">🔍</button>
             <a href="compte.html"></a>
-            <button><img src="public/images/panier.png" alt="Panier" title="Panier"></button>
+            <button><img src="public/images/icon_panier.png" alt="Panier" title="Panier"></button>
         </div>
     </header>

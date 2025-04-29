@@ -9,7 +9,7 @@
 	<meta name="keywords" content="Bière, Draskan, alcool, Bière Viking">
 	<link rel="icon" href="public/images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="public/styles/verifage.css">
-    <link rel="stylesheet" href="public/styles/style.css">
+    <link rel="stylesheet" href="public/styles/main.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
@@ -61,6 +61,6 @@
             <input type="text" id="search" placeholder="Rechercher...">
             <button id="searchButton">🔍</button>
             <a href="compte.html"></a>
-            <button><img src="public/images/panier.png" alt="Panier" title="Panier"></button>
+            <button><img src="public/images/icon_panier.png" alt="Panier" title="Panier"></button>
         </div>
     </header>
