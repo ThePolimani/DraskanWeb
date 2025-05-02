@@ -1,6 +1,5 @@
 main {
     color: white;
-    display: flex;
     align-items: center;
     justify-content: center;
 }
@@ -13,6 +12,7 @@ main {
     justify-content: center;
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.075), rgba(0, 0, 0, 0.767)), url('../images/font_main_page.jpg');
     background-size: cover;
+    background-position: center;
 }
 
 h1 {

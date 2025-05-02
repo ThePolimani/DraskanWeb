@@ -13,8 +13,6 @@ html, body {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
     flex: 1;
     flex-grow: 1;
 }
@@ -168,6 +166,24 @@ footer img {
 
 #footer-legal {
     margin-top: 20px;
+}
+
+@media screen and (max-width: 670px) {
+
+    footer img {
+        height: 70px;
+    }
+
+    footer {
+        height: 400px;
+    }
+
+    #footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    
 }
 
 
