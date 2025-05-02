@@ -14,7 +14,8 @@
                 <a href="#"><img src="public/images/logo_x.svg" alt="Twitter"></a>
             </div>
             <div>
-                <p><a href="mentions_legales.html">Mentions légales</a></p>
+                <a href="mentions_legales.html">Mentions légales</a>
+                <a href="mentions_legales.html">Conditions d'utilisation</a>
             </div>
         </div>
         <div id="footer-legal">
