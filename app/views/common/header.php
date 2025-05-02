@@ -10,6 +10,9 @@
 	<link rel="icon" href="public/images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="public/styles/verifage.css">
     <link rel="stylesheet" href="public/styles/main.css">
+    <?php if (!empty($pageSpecificCSS)): ?>
+        <link rel="stylesheet" href="public/styles/<?= $pageSpecificCSS ?>">
+    <?php endif; ?>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
@@ -51,7 +54,7 @@
         </div>
     </div>
 
-    <header>
+    <header class="animatedList">
         <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
         <nav>
             <a href="produits.html">Produits</a>

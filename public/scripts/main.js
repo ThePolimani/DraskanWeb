@@ -14,3 +14,23 @@ const observer = new IntersectionObserver(function (entries) {
       item.classList.add('hidden');
       observer.observe(item);
   });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionner tous les éléments avec la classe "animatedList"
+    const animatedLists = document.querySelectorAll('.animatedList');
+    
+    // Parcourir chaque liste
+    animatedLists.forEach(list => {
+        // Sélectionner tous les enfants directs (si vous voulez seulement les enfants directs)
+        // const children = list.children;
+        
+        // Ou sélectionner tous les descendants (selon votre besoin)
+        const children = list.querySelectorAll('*');
+        
+        // Parcourir chaque enfant avec son index
+        Array.from(children).forEach((child, index) => {
+            // Appliquer le délai d'animation
+            child.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+});
