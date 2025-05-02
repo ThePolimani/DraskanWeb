@@ -14,6 +14,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <script src="public/scripts/verifage.js"></script>
+    <script src="public/scripts/main.js"></script>
 	<link rel="apple-touch-icon" href="/app-icon.png">
 </head>
 <body>

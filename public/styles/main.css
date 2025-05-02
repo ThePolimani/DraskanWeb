@@ -44,6 +44,10 @@ header {
     width: auto;
     height: 70px;
     margin-left: 3vw;
+    opacity: 0;
+    animation: fadeInLeft 2s ease;
+    animation-fill-mode: forwards;
+    user-select: none;
 }
 
 header nav {
@@ -126,6 +130,7 @@ footer {
 footer img {
     width: auto;
     height: 90px;
+    user-select: none;
 }
 
 #footer-content div {
@@ -146,7 +151,7 @@ footer img {
 
 #footer-socials img {
     height: 35px;
-    margin: 0 8px;
+    margin: 0 0.3vw;
     transition: 0.05s;
 }
 
@@ -156,4 +161,40 @@ footer img {
 
 #footer-legal {
     margin-top: 20px;
+}
+
+
+
+
+/* ANIMATIONS */
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInLeft {
+	from {
+		transform: translateX(-10%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInRight {
+	from {
+		transform: translateX(10%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
 }
