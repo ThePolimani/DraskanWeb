@@ -1,6 +1,7 @@
 main img {
     width: 30%;
     height: auto;
+    user-select: none;
 }
 
 main {
