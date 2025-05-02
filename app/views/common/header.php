@@ -59,7 +59,7 @@
         </nav>
         <div id="tools">
             <input type="text" id="search" placeholder="Rechercher...">
-            <button id="searchButton">🔍</button>
+            <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
             <a href="newsletter.html"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
             <button id="panier"><img src="public/images/icon_panier.png" alt="Panier" title="Panier"></button>
         </div>

@@ -76,6 +76,11 @@ button {
     width: 260px;
 }
 
+#searchButton img {
+    height: 30px;
+    width: auto;
+}
+
 #newsletter {
     height: 30px;
     width: auto;
@@ -94,7 +99,7 @@ button {
 
 #panier img {
     width: auto;
-    height: 45px;
+    height: 40px;
 }
 
 
