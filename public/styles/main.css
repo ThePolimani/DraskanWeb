@@ -66,7 +66,7 @@ button {
 #tools {
     align-items: center;
     display: flex;
-    gap: 20px;
+    gap: 30px;
 }
 
 #search {
@@ -76,12 +76,18 @@ button {
     width: 260px;
 }
 
+#newsletter {
+    height: 30px;
+    width: auto;
+    transition: 0.08s;
+}
+
 #panier {
     margin-right: 3vw;
     transition: 0.08s;
 }
 
-#panier:hover {
+#panier:hover, #newsletter:hover {
     cursor: pointer;
     transform: scale(1.05);
 }
