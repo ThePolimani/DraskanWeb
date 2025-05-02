@@ -51,7 +51,7 @@
     </div>
 
     <header>
-        <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil"></a>
+        <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
         <nav>
             <a href="produits.html">Produits</a>
             <a href="partenaires.html">Partenaires</a>
@@ -61,6 +61,6 @@
             <input type="text" id="search" placeholder="Rechercher...">
             <button id="searchButton">🔍</button>
             <a href="compte.html"></a>
-            <button><img src="public/images/icon_panier.png" alt="Panier" title="Panier"></button>
+            <button id="panier"><img src="public/images/icon_panier.png" alt="Panier" title="Panier"></button>
         </div>
     </header>

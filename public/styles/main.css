@@ -40,7 +40,7 @@ header {
     align-items: center;
 }
 
-header img {
+#logo_header {
     width: auto;
     height: 70px;
     margin-left: 3vw;
@@ -61,6 +61,21 @@ button {
 
 }
 
+#panier {
+    margin-right: 15px;
+    transition: 0.08s;
+}
+
+#panier:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+#panier img {
+    width: auto;
+    height: 40px;
+}
+
 
 /* FOOTER */
 footer {
@@ -78,13 +93,13 @@ footer {
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: 20px;
-    width: 100%;
+    width: 80%;
+    min-width: 660px;
 }
 
 footer img {
     width: auto;
     height: 90px;
-    margin-right: 3vw;
 }
 
 #footer-content div {
@@ -106,4 +121,8 @@ footer img {
 
 #footer-socials img:hover {
     transform: scale(1.05);
+}
+
+#footer-lagal {
+    margin-top: 12px;
 }
