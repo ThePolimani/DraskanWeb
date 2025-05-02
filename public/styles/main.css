@@ -127,16 +127,21 @@ footer img {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 12px;
 }
 
 #footer-socials {
-    flex-direction: row!important;
-    align-items: center;
+    align-items: flex-start;
+}
+
+#footer-socials div {
+    display: flex;
+    flex-direction: row;
 }
 
 #footer-socials img {
     height: 35px;
-    margin: 0 10px;
+    margin: 0 8px;
     transition: 0.05s;
 }
 
@@ -144,6 +149,6 @@ footer img {
     transform: scale(1.05);
 }
 
-#footer-lagal {
-    margin-top: 12px;
+#footer-legal {
+    margin-top: 20px;
 }
