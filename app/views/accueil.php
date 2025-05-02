@@ -1,3 +1,6 @@
 <main>
-    <img src="public/images/draskan_texte_logo.png" alt="Logo Draskan">
+    <div id="accueil_1">
+        <h1>DRASKAN</h1>
+    </div>
+
 </main>
