@@ -3,7 +3,13 @@ const observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
         if (entry.isIntersecting) {
             const element = entry.target;
-            const animationClass = element.getAttribute('data-animation');
+            let animationClass = element.getAttribute('data-animation');
+            
+            // Héritage de l'animation depuis le parent .animatedList
+            if (!animationClass && element.closest('.animatedList')) {
+                const parentList = element.closest('.animatedList');
+                animationClass = parentList.getAttribute('data-animation');
+            }
             
             if (animationClass) {
                 element.classList.add(animationClass);
@@ -14,25 +20,48 @@ const observer = new IntersectionObserver(function (entries) {
     });
 }, { threshold: 0.1 });
 
-// Fonction pour initialiser les animations
 function initAnimations() {
-    // Elements .animated simples
-    document.querySelectorAll('.animated').forEach(item => {
+    // Elements .animated simples (qui ne sont pas dans une animatedList)
+    document.querySelectorAll('.animated:not(.animatedList *)').forEach(item => {
         item.classList.add('hidden');
         observer.observe(item);
     });
 
-    // Elements dans .animatedList
-    document.querySelectorAll('.animatedList > *').forEach((child, index) => {
-        child.classList.add('hidden');
-        child.classList.add('animated'); // On leur ajoute la classe animated
-        child.style.animationDelay = `${index * 0.1}s`;
-        observer.observe(child);
+    let globalIndex = 0;
+    
+    document.querySelectorAll('.animatedList').forEach(list => {
+        const shouldResetDelay = list.hasAttribute('data-reset-delay');
+        const includeNested = list.hasAttribute('data-include-nested');
+        const baseDelay = parseFloat(list.getAttribute('data-delay-step')) || 0.1;
+        const startDelay = parseFloat(list.getAttribute('data-start-delay')) || 0;
+        
+        // Sélection des enfants (directs ou imbriqués selon l'option)
+        const selector = includeNested ? '.animatedList *' : ':scope > *';
+        const children = list.querySelectorAll(selector);
+        
+        let localIndex = 0;
+        
+        children.forEach(child => {
+            // On évite de traiter les sous-listes animées
+            if (child.closest('.animatedList') !== list) return;
+            
+            child.classList.add('hidden');
+            child.classList.add('animated');
+            
+            // Calcul du délai
+            const currentIndex = shouldResetDelay ? localIndex : globalIndex;
+            child.style.animationDelay = `${startDelay + (currentIndex * baseDelay)}s`;
+            
+            observer.observe(child);
+            
+            localIndex++;
+            globalIndex++;
+        });
     });
 }
 
-// Lancer l'initialisation
 document.addEventListener('DOMContentLoaded', initAnimations);
+
 
 let defaultTranslations = {}; // Stock anglais
 let currentTranslations = {}; // Stock langue actuelle
