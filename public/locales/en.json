@@ -1,4 +1,13 @@
 {
+    "footer_suivre": "Follow us :",
+    "link_produits": "Products",
+    "link_partenaires": "our Partners",
+    "link_contact": "Contact us",
+    "link_mentionlegal": "Legal notice",
+    "link_conditions": "Terms of use",
+    "copyright": "&copy; 2025 Draskan. All rights reserved.",
+
+
     "exemple": "traduction of an element in english",
     "autre_exemple": "the name of the element is the same as its id"
 }
