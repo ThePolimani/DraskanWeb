@@ -5,26 +5,26 @@
             </div>
             <div id="footer-socials">
                 <div>
-                    <p>Suivez-nous :</p>
+                    <p id="footer_suivre">Suivez-nous :</p>
                 </div>
                 <div>
-                    <a href="#"><img src="public/images/logo_facebook.svg" alt="Facebook"></a>
-                    <a href="#"><img src="public/images/logo_insta.svg" alt="Instagram"></a>
-                    <a href="#"><img src="public/images/logo_x.svg" alt="Twitter"></a>
+                    <a href="#"><img src="public/images/logo_facebook.svg" alt="Facebook" title="Facebook"></a>
+                    <a href="#"><img src="public/images/logo_insta.svg" alt="Instagram" title="Instagram"></a>
+                    <a href="#"><img src="public/images/logo_x.svg" alt="Twitter" title="Twitter"></a>
                 </div>
             </div>
             <div id="footer-links">
-                <a href="produits.html">Produits</a>
-                <a href="partenaires.html">Partenaires</a>
-                <a href="contact.html">Nous Contactez</a>
+                <a href="produits.html" id="link_produits">Produits</a>
+                <a href="partenaires.html" id="link_partenaires">Partenaires</a>
+                <a href="contact.html" id="link_contact">Nous Contactez</a>
             </div>
             <div id="footer-legal-links">
-                <a href="mentions_legales.html">Mentions légales</a>
-                <a href="conditions-utilisation.html">Conditions d'utilisation</a>
+                <a href="mentions_legales.html" id="link_mentionlegal">Mentions légales</a>
+                <a href="conditions-utilisation.html" id="link_conditions">Conditions d'utilisation</a>
             </div>
         </div>
         <div id="footer-legal">
-            <p>&copy; 2025 Draskan. Tous droits réservés.</p>
+            <p id="copyright">&copy; 2025 Draskan. Tous droits réservés.</p>
         </div>
     </footer>
 </body>
