@@ -1,13 +1,5 @@
 <?php
-// 🔌 Connexion à la base de données
-$host = "vamrosr800.mysql.db"; // À adapter
-$dbname = "vamrosr800";
-$username = "vamrosr800";
-$password = "SQLDBbiere64285";
-$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password, [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+require_once 'app/config.php';
 
 // Récupération des paramètres envoyés en GET
 $mot_cle = isset($_GET['q']) ? trim($_GET['q']) : "";
