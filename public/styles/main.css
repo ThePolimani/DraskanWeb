@@ -130,6 +130,7 @@ footer {
     margin-top: 20px;
     width: 80%;
     min-width: 660px;
+    max-width: 1300px;
 }
 
 footer img {
