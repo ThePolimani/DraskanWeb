@@ -32,6 +32,11 @@ a:hover {
     text-decoration: underline;
 }
 
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
 
 
 /* HEADER */
