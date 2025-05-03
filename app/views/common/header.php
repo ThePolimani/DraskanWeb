@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <header class="animatedList">
+    <header class="animatedList" data-animation="fadeIn" data-delay-step="0.2">
         <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
         <nav>
             <a href="produits.html">Produits</a>
