@@ -184,6 +184,10 @@ footer img {
         min-width: unset;
         gap: 40px;
     }
+
+    #footer-legal {
+        margin-top: 40px;
+    }
 }
 
 
