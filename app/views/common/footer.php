@@ -1,5 +1,5 @@
 <footer>
-        <div id="footer-content">
+        <div id="footer-content" class="animatedList" data-animation="fadeIn" data-reset-delay>
             <div id="footer-logo">
                 <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil"></a>
             </div>
@@ -23,7 +23,7 @@
                 <a href="conditions-utilisation.html" id="link_conditions">Conditions d'utilisation</a>
             </div>
         </div>
-        <div id="footer-legal">
+        <div id="footer-legal" class="animatedList" data-animation="fadeIn">
             <p id="copyright">&copy; 2025 Draskan. Tous droits réservés.</p>
         </div>
     </footer>
