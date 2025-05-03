@@ -1,5 +1,3 @@
-const animatedItems = document.querySelectorAll('.animated');
-const animatedListItems = document.querySelectorAll('.animatedList > *'); // Sélectionne tous les enfants directs
 
 const observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
@@ -16,38 +14,25 @@ const observer = new IntersectionObserver(function (entries) {
     });
 }, { threshold: 0.1 });
 
-// Gestion des éléments .animated
-animatedItems.forEach(function (item) {
-    item.classList.add('hidden');
-    observer.observe(item);
-});
-
-// Gestion des éléments .animatedList et leurs enfants
-document.addEventListener('DOMContentLoaded', function() {
-    const animatedLists = document.querySelectorAll('.animatedList');
-    
-    animatedLists.forEach(list => {
-        // Masquer la liste parente
-        list.classList.add('hidden');
-        
-        // Sélectionner tous les enfants (directs ou non selon votre besoin)
-        const children = list.querySelectorAll('*');
-        
-        Array.from(children).forEach((child, index) => {
-            // Masquer chaque enfant
-            child.classList.add('hidden');
-            
-            // Appliquer le délai d'animation
-            child.style.animationDelay = `${index * 0.1}s`;
-            
-            // Observer chaque enfant
-            observer.observe(child);
-        });
-        
-        // Observer aussi la liste parente si nécessaire
-        observer.observe(list);
+// Fonction pour initialiser les animations
+function initAnimations() {
+    // Elements .animated simples
+    document.querySelectorAll('.animated').forEach(item => {
+        item.classList.add('hidden');
+        observer.observe(item);
     });
-});
+
+    // Elements dans .animatedList
+    document.querySelectorAll('.animatedList > *').forEach((child, index) => {
+        child.classList.add('hidden');
+        child.classList.add('animated'); // On leur ajoute la classe animated
+        child.style.animationDelay = `${index * 0.1}s`;
+        observer.observe(child);
+    });
+}
+
+// Lancer l'initialisation
+document.addEventListener('DOMContentLoaded', initAnimations);
 
 let defaultTranslations = {}; // Stock anglais
 let currentTranslations = {}; // Stock langue actuelle
