@@ -1,63 +1,71 @@
-
 const observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-            const element = entry.target;
-            let animationClass = element.getAttribute('data-animation');
-            
-            // Héritage de l'animation depuis le parent .animatedList
-            if (!animationClass && element.closest('.animatedList')) {
-                const parentList = element.closest('.animatedList');
-                animationClass = parentList.getAttribute('data-animation');
-            }
-            
-            if (animationClass) {
-                element.classList.add(animationClass);
-            }
-            
-            element.classList.remove('hidden');
-        }
-    });
+  entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+          const element = entry.target;
+          
+          // On ignore les éléments avec no-animation
+          if (element.classList.contains('no-animation')) return;
+          
+          let animationClass = element.getAttribute('data-animation');
+          
+          // Héritage de l'animation depuis le parent .animatedList
+          if (!animationClass && element.closest('.animatedList')) {
+              const parentList = element.closest('.animatedList');
+              animationClass = parentList.getAttribute('data-animation');
+          }
+          
+          if (animationClass) {
+              element.classList.add(animationClass);
+          }
+          
+          element.classList.remove('hidden');
+      }
+  });
 }, { threshold: 0.1 });
 
 function initAnimations() {
-    // Elements .animated simples (qui ne sont pas dans une animatedList)
-    document.querySelectorAll('.animated:not(.animatedList *)').forEach(item => {
-        item.classList.add('hidden');
-        observer.observe(item);
-    });
+  // Elements .animated simples (qui ne sont pas dans une animatedList)
+  document.querySelectorAll('.animated:not(.animatedList *)').forEach(item => {
+      if (item.classList.contains('no-animation')) return;
+      item.classList.add('hidden');
+      observer.observe(item);
+  });
 
-    let globalIndex = 0;
-    
-    document.querySelectorAll('.animatedList').forEach(list => {
-        const shouldResetDelay = list.hasAttribute('data-reset-delay');
-        const includeNested = list.hasAttribute('data-include-nested');
-        const baseDelay = parseFloat(list.getAttribute('data-delay-step')) || 0.1;
-        const startDelay = parseFloat(list.getAttribute('data-start-delay')) || 0;
-        
-        // Sélection des enfants (directs ou imbriqués selon l'option)
-        const selector = includeNested ? '.animatedList *' : ':scope > *';
-        const children = list.querySelectorAll(selector);
-        
-        let localIndex = 0;
-        
-        children.forEach(child => {
-            // On évite de traiter les sous-listes animées
-            if (child.closest('.animatedList') !== list) return;
-            
-            child.classList.add('hidden');
-            child.classList.add('animated');
-            
-            // Calcul du délai
-            const currentIndex = shouldResetDelay ? localIndex : globalIndex;
-            child.style.animationDelay = `${startDelay + (currentIndex * baseDelay)}s`;
-            
-            observer.observe(child);
-            
-            localIndex++;
-            globalIndex++;
-        });
-    });
+  let globalIndex = 0;
+  
+  document.querySelectorAll('.animatedList').forEach(list => {
+      const shouldResetDelay = list.hasAttribute('data-reset-delay');
+      const includeNested = list.hasAttribute('data-include-nested');
+      const onlyLeafNodes = list.hasAttribute('data-leaf-only');
+      const baseDelay = parseFloat(list.getAttribute('data-delay-step')) || 0.1;
+      const startDelay = parseFloat(list.getAttribute('data-start-delay')) || 0;
+      
+      // Sélection des enfants selon les options
+      let selector = includeNested ? '.animatedList *' : ':scope > *';
+      if (onlyLeafNodes) selector += ':not(:has(*))';
+      
+      const children = list.querySelectorAll(selector);
+      
+      let localIndex = 0;
+      
+      children.forEach(child => {
+          // On ignore si no-animation ou si dans une sous-liste
+          if (child.classList.contains('no-animation') || 
+              (child.closest('.animatedList') !== list && !includeNested)) return;
+          
+          child.classList.add('hidden');
+          child.classList.add('animated');
+          
+          // Calcul du délai
+          const currentIndex = shouldResetDelay ? localIndex : globalIndex;
+          child.style.animationDelay = `${startDelay + (currentIndex * baseDelay)}s`;
+          
+          observer.observe(child);
+          
+          localIndex++;
+          globalIndex++;
+      });
+  });
 }
 
 document.addEventListener('DOMContentLoaded', initAnimations);
