@@ -198,6 +198,12 @@ footer img {
 
 /* ANIMATIONS */
 
+@media (prefers-reduced-motion) {
+    .animated, .animatedList * {
+      animation: none !important;
+    }
+  }
+
 .fadeIn {
     opacity: 0;
     animation: fadeIn 2s ease;
