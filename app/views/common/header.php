@@ -57,9 +57,9 @@
     <header class="animatedList" data-animation="fadeIn" data-delay-step="0.2">
         <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
         <nav>
-            <a href="produits.html">Produits</a>
-            <a href="partenaires.html">Partenaires</a>
-            <a href="contact.html">Nous Contactez</a>
+            <a href="produits.html" id="link_produits">Produits</a>
+            <a href="partenaires.html" id="link_partenaires">Partenaires</a>
+            <a href="contact.html" id="link_contact">Nous Contactez</a>
         </nav>
         <div id="tools">
             <input type="text" id="search" placeholder="Rechercher...">
