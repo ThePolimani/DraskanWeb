@@ -24,7 +24,7 @@
             </div>
         </div>
         <div id="footer-legal" class="animatedList" data-animation="fadeIn">
-            <p id="copyright">&copy; 2025 Draskan. Tous droits réservés.</p>
+            <p id="copyright">© 2025 Draskan. Tous droits réservés.</p>
         </div>
     </footer>
 </body>
