@@ -168,7 +168,7 @@ footer img {
 }
 
 #footer-legal {
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 @media screen and (max-width: 670px) {
