@@ -11,7 +11,7 @@
 
 
     </div>
-    <div id="accueil_3" class="animatedList" data-animation="fadeInLeft" data-reset-delay data-leaf-only>
+    <div id="accueil_3" class="animatedList" data-animation="fadeInLeft" data-reset-delay>
         <h2>Notre histoire :</h2>
         <div>
             <p>Dans une contrée nordique balayée par les vents, les forêts profondes cachent un secret ancestral. Là, 
