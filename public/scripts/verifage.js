@@ -52,6 +52,7 @@ function verifyAge() {
         sessionStorage.setItem('ageVerified', 'true');
         document.getElementById('ageVerificationModal').style.display = 'none';
         document.body.style.overflow = "";
+        location.reload();
     } else {
         errorElement.textContent = 'Désolé, vous devez avoir au moins 18 ans pour accéder à ce site.';
         // Redirection ou autre action pour les mineurs
