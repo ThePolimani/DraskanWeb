@@ -1,106 +1,70 @@
-const observer = new IntersectionObserver(function (entries) {
-  entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-          const element = entry.target;
-          
-          if (element.classList.contains('no-animation')) return;
-          
-          // L'élément a sa propre animation -> on l'utilise
-          if (element.hasAttribute('data-animation')) {
-              element.classList.add(element.getAttribute('data-animation'));
-          }
-          // Sinon, on cherche dans les parents .animatedList
-          else {
-              const parentList = element.closest('.animatedList');
-              if (parentList && parentList.hasAttribute('data-animation')) {
-                  element.classList.add(parentList.getAttribute('data-animation'));
-              }
-          }
-          
-          element.classList.remove('hidden');
-      }
-  });
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const element = entry.target;
+
+            // Trouver l'animation à appliquer (priorité à l'élément)
+            const animation = element.dataset.animation || 
+                             element.closest('.animatedList')?.dataset.animation;
+            
+            if (animation) {
+                element.classList.add(animation);
+                element.classList.remove('hidden');
+            }
+        }
+    });
 }, { threshold: 0.1 });
 
-function isLeafNode(element) {
-  // Un noeud feuille est soit:
-  // 1. Un élément sans enfants
-  // 2. Un élément avec uniquement des noeuds texte
-  if (element.childElementCount === 0) return true;
-  
-  const children = element.childNodes;
-  for (let i = 0; i < children.length; i++) {
-      if (children[i].nodeType === Node.ELEMENT_NODE) {
-          return false;
-      }
-  }
-  return true;
-}
-
 function initAnimations() {
-  // Elements .animated simples (hors des animatedList)
-  document.querySelectorAll('.animated:not(.animatedList *)').forEach(item => {
-      if (item.classList.contains('no-animation')) return;
-      item.classList.add('hidden');
-      observer.observe(item);
-  });
 
-  let globalIndex = 0;
-  
-  document.querySelectorAll('.animatedList').forEach(list => {
-      const shouldResetDelay = list.hasAttribute('data-reset-delay');
-      const includeNested = list.hasAttribute('data-include-nested');
-      const onlyLeafNodes = list.hasAttribute('data-leaf-only');
-      const baseDelay = parseFloat(list.getAttribute('data-delay-step')) || 0.1;
-      const startDelay = parseFloat(list.getAttribute('data-start-delay')) || 0;
-      
-      let children = [];
-      
-      if (onlyLeafNodes) {
-          // Pour data-leaf-only, on prend les feuilles
-          const allElements = list.querySelectorAll('*');
-          allElements.forEach(el => {
-              if ((includeNested || el.parentElement === list) && isLeafNode(el)) {
-                  children.push(el);
-              }
-          });
-          
-          // On ajoute aussi les enfants directs qui sont des noeuds texte
-          Array.from(list.childNodes).forEach(node => {
-              if (node.nodeType === Node.ELEMENT_NODE && isLeafNode(node)) {
-                  children.push(node);
-              }
-          });
-      } else {
-          children = includeNested ? 
-              Array.from(list.querySelectorAll('*')).filter(el => 
-                  el.closest('.animatedList') === list) : 
-              Array.from(list.children);
-      }
-      
-      // Suppression des doublons
-      children = [...new Set(children)];
-      
-      let localIndex = 0;
-      
-      children.forEach(child => {
-          if (child.classList && 
-              !child.classList.contains('no-animation') && 
-              (!child.closest('.animatedList') || includeNested || child.closest('.animatedList') === list)) {
-              
-              child.classList.add('hidden');
-              child.classList.add('animated');
-              
-              const currentIndex = shouldResetDelay ? localIndex : globalIndex;
-              child.style.animationDelay = `${startDelay + (currentIndex * baseDelay)}s`;
-              
-              observer.observe(child);
-              
-              localIndex++;
-              globalIndex++;
-          }
-      });
-  });
+    // 1. Traiter d'abord tous les éléments avec data-animation explicite
+    document.querySelectorAll('[data-animation]').forEach(el => {
+        if (!el.closest('.animatedList')) { // Exclure ceux dans les listes
+            el.classList.add('hidden', 'animated');
+            observer.observe(el);
+        }
+    });
+
+    // 2. Traiter les animatedList
+    document.querySelectorAll('.animatedList').forEach(list => {
+        const listAnimation = list.dataset.animation;
+        const onlyLeaves = list.hasAttribute('data-leaf-only');
+        const delayStep = parseFloat(list.dataset.delayStep) || 0.1;
+        const startDelay = parseFloat(list.dataset.startDelay) || 0;
+        let index = 0;
+
+        // Fonction pour déterminer si un élément doit être animé
+        function shouldAnimate(element) {
+            if (element.classList.contains('no-animation')) return false;
+            if (onlyLeaves && element.children.length > 0) return false;
+            return true;
+        }
+
+        // Collecter tous les éléments à animer
+        const elementsToAnimate = [];
+        
+        // a) Les enfants directs
+        Array.from(list.children).forEach(child => {
+            if (shouldAnimate(child)) {
+                elementsToAnimate.push(child);
+            } else if (onlyLeaves) {
+                // b) Pour leaf-only, explorer les enfants des non-feuilles
+                child.querySelectorAll('*').forEach(descendant => {
+                    if (descendant.children.length === 0 && shouldAnimate(descendant)) {
+                        elementsToAnimate.push(descendant);
+                    }
+                });
+            }
+        });
+
+        // Configurer et observer les éléments
+        elementsToAnimate.forEach((el, i=) > {
+            el.classList.add('hidden', 'animated');
+            el.style.animationDelay = `${startDelay + (i * delayStep)}s`;
+            observer.observe(el);
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', initAnimations);
