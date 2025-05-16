@@ -3,20 +3,18 @@ const observer = new IntersectionObserver(function (entries) {
       if (entry.isIntersecting) {
           const element = entry.target;
           
-          // On ignore les éléments avec no-animation
           if (element.classList.contains('no-animation')) return;
           
-          // Priorité à l'animation de l'élément lui-même
-          let animationClass = element.getAttribute('data-animation');
-          
-          // Si pas d'animation définie, on regarde chez le parent .animatedList
-          if (!animationClass && element.closest('.animatedList')) {
-              const parentList = element.closest('.animatedList');
-              animationClass = parentList.getAttribute('data-animation');
+          // L'élément a sa propre animation -> on l'utilise
+          if (element.hasAttribute('data-animation')) {
+              element.classList.add(element.getAttribute('data-animation'));
           }
-          
-          if (animationClass) {
-              element.classList.add(animationClass);
+          // Sinon, on cherche dans les parents .animatedList
+          else {
+              const parentList = element.closest('.animatedList');
+              if (parentList && parentList.hasAttribute('data-animation')) {
+                  element.classList.add(parentList.getAttribute('data-animation'));
+              }
           }
           
           element.classList.remove('hidden');
@@ -24,8 +22,23 @@ const observer = new IntersectionObserver(function (entries) {
   });
 }, { threshold: 0.1 });
 
+function isLeafNode(element) {
+  // Un noeud feuille est soit:
+  // 1. Un élément sans enfants
+  // 2. Un élément avec uniquement des noeuds texte
+  if (element.childElementCount === 0) return true;
+  
+  const children = element.childNodes;
+  for (let i = 0; i < children.length; i++) {
+      if (children[i].nodeType === Node.ELEMENT_NODE) {
+          return false;
+      }
+  }
+  return true;
+}
+
 function initAnimations() {
-  // Elements .animated simples (qui ne sont pas dans une animatedList)
+  // Elements .animated simples (hors des animatedList)
   document.querySelectorAll('.animated:not(.animatedList *)').forEach(item => {
       if (item.classList.contains('no-animation')) return;
       item.classList.add('hidden');
@@ -41,40 +54,51 @@ function initAnimations() {
       const baseDelay = parseFloat(list.getAttribute('data-delay-step')) || 0.1;
       const startDelay = parseFloat(list.getAttribute('data-start-delay')) || 0;
       
-      // Sélection des enfants selon les options
-      let children;
+      let children = [];
+      
       if (onlyLeafNodes) {
-          // Pour data-leaf-only, on prend tous les éléments sans enfants OU avec seulement du texte
-          children = Array.from(list.querySelectorAll('*')).filter(el => 
-              (el.childElementCount === 0 || 
-               (el.childElementCount === 1 && el.firstElementChild.nodeType === Node.TEXT_NODE)) &&
-              (includeNested || el.parentElement === list)
-          );
+          // Pour data-leaf-only, on prend les feuilles
+          const allElements = list.querySelectorAll('*');
+          allElements.forEach(el => {
+              if ((includeNested || el.parentElement === list) && isLeafNode(el)) {
+                  children.push(el);
+              }
+          });
+          
+          // On ajoute aussi les enfants directs qui sont des noeuds texte
+          Array.from(list.childNodes).forEach(node => {
+              if (node.nodeType === Node.ELEMENT_NODE && isLeafNode(node)) {
+                  children.push(node);
+              }
+          });
       } else {
           children = includeNested ? 
               Array.from(list.querySelectorAll('*')).filter(el => 
-                  el.closest('.animatedList') === list || el.parentElement === list) : 
+                  el.closest('.animatedList') === list) : 
               Array.from(list.children);
       }
+      
+      // Suppression des doublons
+      children = [...new Set(children)];
       
       let localIndex = 0;
       
       children.forEach(child => {
-          // On ignore si no-animation ou si dans une sous-liste (sauf si includeNested)
-          if (child.classList.contains('no-animation') || 
-              (!includeNested && child.closest('.animatedList') !== list)) return;
-          
-          child.classList.add('hidden');
-          child.classList.add('animated');
-          
-          // Calcul du délai
-          const currentIndex = shouldResetDelay ? localIndex : globalIndex;
-          child.style.animationDelay = `${startDelay + (currentIndex * baseDelay)}s`;
-          
-          observer.observe(child);
-          
-          localIndex++;
-          globalIndex++;
+          if (child.classList && 
+              !child.classList.contains('no-animation') && 
+              (!child.closest('.animatedList') || includeNested || child.closest('.animatedList') === list)) {
+              
+              child.classList.add('hidden');
+              child.classList.add('animated');
+              
+              const currentIndex = shouldResetDelay ? localIndex : globalIndex;
+              child.style.animationDelay = `${startDelay + (currentIndex * baseDelay)}s`;
+              
+              observer.observe(child);
+              
+              localIndex++;
+              globalIndex++;
+          }
       });
   });
 }
