@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  
+    background-size: cover;
+    font-family: 'Lancelot', sans-serif;
+    text-align: center;
+    background-image: url('../images/fondpartenaires.jpg');
+
+}
+
+
+header {
+  background-color: #000;
+  color: rgb(255, 255, 255);
+  padding: 2rem 1rem;
+}
+
+
+
+header h1 {
+  font-size: 2.5rem;
+}
+
+.partners {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem 1rem;
+
+}
+
+.partner-card {
+  background-color: rgb(0, 0, 0);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  width: 280px;
+  transition: transform 0.3s ease;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+
+.partner-card h2 {
+    color: #ffffff;
+}
+
+.partner-card:hover {
+  transform: scale(1.05);
+}
+
+.partner-logo {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+footer {
+  background-color: #000;
+  color: rgb(228, 228, 228);
+  padding: 1rem;
+  margin-top: 2rem;
+}
