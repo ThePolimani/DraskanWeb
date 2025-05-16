@@ -22,7 +22,7 @@
 </head>
 <body>
     <div id="ageVerificationModal">
-        <div id="ageVerificationContent">
+        <div id="ageVerificationContent" class="animatedList" data-animation="fadeIn" data-delay-step="0.05">
             <h2>Vérification d'âge</h2>
             <p>Pour accéder à notre site, veuillez confirmer votre âge:</p>
             
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <header class="animatedList" data-animation="fadeIn" data-delay-step="0.2">
+    <header class="animatedList" data-animation="fadeIn" data-delay-step="0.2" data-reset-delay>
         <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
         <nav>
             <a href="produits.html" id="link_produits">Produits</a>
