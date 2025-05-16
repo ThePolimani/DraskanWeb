@@ -37,6 +37,10 @@ a:hover {
     opacity: 0;
 }
 
+.no-delay {
+    animation-delay: 0s !important;
+}
+
 
 
 /* HEADER */
