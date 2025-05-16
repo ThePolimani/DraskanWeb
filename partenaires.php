@@ -19,6 +19,7 @@ try {
   <title>Nos Partenaires</title>
   <link rel="stylesheet" href="public/styles/main.css">
   <link rel="stylesheet" href="public/styles/partenaires.css">
+  <script src="public/scripts/main.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lancelot&display=swap" rel="stylesheet">
@@ -29,7 +30,7 @@ try {
   </header>
 
   <main>
-    <div class="partners">
+    <div class="partners animatedList" data-animation="fadeInUp" data-reset-delay data-delay-step="0.2">
         <?php foreach ($partenaires as $partenaire): ?>
         <div class="partner-card">
           <img src="<?= htmlspecialchars($partenaire['logo_url']) ?>" alt="Logo <?= htmlspecialchars($partenaire['nom']) ?>" class="partner-logo" />

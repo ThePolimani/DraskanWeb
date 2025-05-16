@@ -252,3 +252,20 @@ footer img {
 		opacity: 1;
 	}
 }
+
+.fadeInUp {
+    opacity: 0;
+    animation: fadeInUp 2s ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInUp {
+	from {
+		transform: translateY(10%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
