@@ -6,9 +6,10 @@ const observer = new IntersectionObserver(function (entries) {
           // On ignore les éléments avec no-animation
           if (element.classList.contains('no-animation')) return;
           
+          // Priorité à l'animation de l'élément lui-même
           let animationClass = element.getAttribute('data-animation');
           
-          // Héritage de l'animation depuis le parent .animatedList
+          // Si pas d'animation définie, on regarde chez le parent .animatedList
           if (!animationClass && element.closest('.animatedList')) {
               const parentList = element.closest('.animatedList');
               animationClass = parentList.getAttribute('data-animation');
@@ -41,17 +42,27 @@ function initAnimations() {
       const startDelay = parseFloat(list.getAttribute('data-start-delay')) || 0;
       
       // Sélection des enfants selon les options
-      let selector = includeNested ? '.animatedList *' : ':scope > *';
-      if (onlyLeafNodes) selector += ':not(:has(*))';
-      
-      const children = list.querySelectorAll(selector);
+      let children;
+      if (onlyLeafNodes) {
+          // Pour data-leaf-only, on prend tous les éléments sans enfants OU avec seulement du texte
+          children = Array.from(list.querySelectorAll('*')).filter(el => 
+              (el.childElementCount === 0 || 
+               (el.childElementCount === 1 && el.firstElementChild.nodeType === Node.TEXT_NODE)) &&
+              (includeNested || el.parentElement === list)
+          );
+      } else {
+          children = includeNested ? 
+              Array.from(list.querySelectorAll('*')).filter(el => 
+                  el.closest('.animatedList') === list || el.parentElement === list) : 
+              Array.from(list.children);
+      }
       
       let localIndex = 0;
       
       children.forEach(child => {
-          // On ignore si no-animation ou si dans une sous-liste
+          // On ignore si no-animation ou si dans une sous-liste (sauf si includeNested)
           if (child.classList.contains('no-animation') || 
-              (child.closest('.animatedList') !== list && !includeNested)) return;
+              (!includeNested && child.closest('.animatedList') !== list)) return;
           
           child.classList.add('hidden');
           child.classList.add('animated');
@@ -69,7 +80,6 @@ function initAnimations() {
 }
 
 document.addEventListener('DOMContentLoaded', initAnimations);
-
 
 let defaultTranslations = {}; // Stock anglais
 let currentTranslations = {}; // Stock langue actuelle
