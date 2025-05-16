@@ -4,6 +4,9 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const element = entry.target;
 
+            // On ignore les éléments avec no-animation
+            if (element.classList.contains('no-animation')) return;
+
             // Trouver l'animation à appliquer (priorité à l'élément)
             const animation = element.dataset.animation || 
                              element.closest('.animatedList')?.dataset.animation;
@@ -17,7 +20,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 function initAnimations() {
-
     // 1. Traiter d'abord tous les éléments avec data-animation explicite
     document.querySelectorAll('[data-animation]').forEach(el => {
         if (!el.closest('.animatedList')) { // Exclure ceux dans les listes
@@ -27,42 +29,54 @@ function initAnimations() {
     });
 
     // 2. Traiter les animatedList
+    let globalIndex = 0;
+    
     document.querySelectorAll('.animatedList').forEach(list => {
         const listAnimation = list.dataset.animation;
         const onlyLeaves = list.hasAttribute('data-leaf-only');
+        const shouldResetDelay = list.hasAttribute('data-reset-delay');
         const delayStep = parseFloat(list.dataset.delayStep) || 0.1;
         const startDelay = parseFloat(list.dataset.startDelay) || 0;
-        let index = 0;
+        let localIndex = 0;
 
-        // Fonction pour déterminer si un élément doit être animé
+        // Fonction pour déterminer si un élément doit être animé (version simplifiée)
         function shouldAnimate(element) {
             if (element.classList.contains('no-animation')) return false;
             if (onlyLeaves && element.children.length > 0) return false;
             return true;
         }
 
-        // Collecter tous les éléments à animer
+        // Collecter tous les éléments à animer (version optimisée du nouveau code)
         const elementsToAnimate = [];
         
-        // a) Les enfants directs
-        Array.from(list.children).forEach(child => {
-            if (shouldAnimate(child)) {
-                elementsToAnimate.push(child);
-            } else if (onlyLeaves) {
-                // b) Pour leaf-only, explorer les enfants des non-feuilles
-                child.querySelectorAll('*').forEach(descendant => {
-                    if (descendant.children.length === 0 && shouldAnimate(descendant)) {
-                        elementsToAnimate.push(descendant);
-                    }
-                });
-            }
-        });
+        if (onlyLeaves) {
+            // Mode leaf-only: on prend uniquement les éléments sans enfants
+            list.querySelectorAll('*').forEach(el => {
+                if (el.children.length === 0 && shouldAnimate(el)) {
+                    elementsToAnimate.push(el);
+                }
+            });
+        } else {
+            // Mode normal: on prend les enfants directs
+            Array.from(list.children).forEach(child => {
+                if (shouldAnimate(child)) {
+                    elementsToAnimate.push(child);
+                }
+            });
+        }
 
         // Configurer et observer les éléments
-        elementsToAnimate.forEach((el, i=) > {
+        elementsToAnimate.forEach(el => {
             el.classList.add('hidden', 'animated');
-            el.style.animationDelay = `${startDelay + (i * delayStep)}s`;
+            
+            // Calcul du délai avec gestion de shouldResetDelay
+            const currentIndex = shouldResetDelay ? localIndex : globalIndex;
+            el.style.animationDelay = `${startDelay + (currentIndex * delayStep)}s`;
+            
             observer.observe(el);
+            
+            localIndex++;
+            if (!shouldResetDelay) globalIndex++;
         });
     });
 }
