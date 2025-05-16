@@ -4,7 +4,7 @@
             <h1>DRASKAN</h1>
             <p>Afficher les produits</p>
         </div>
-        <img src="public/images/bouteille_mockup.png" alt="Bouteille Draskan" class="animated" data-animation="fadeInRight">
+        <img src="public/images/bouteille_mockup.png" alt="Bouteille Draskan" class="animated" data-animation="fadeInRight" data-start-delay="1">
     </div>
     <div id="accueil_2">
         <h2>Nos Produits :</h2>
@@ -22,7 +22,7 @@
                 et la fraîcheur éclatante de la menthe, ils brassèrent une bière unique. À chaque gorgée de Draskan, 
                 c’est comme si l’on sentait ce vent nordique caresser la peau, éveillant les sens avec sa force et sa fraîcheur.
             </p>
-            <img src="public/images/font_toneau.jpg" alt="Image de tonneau" aria-hidden="true" data-animation="fadeInRight" class="animated" data-start-delay="1">
+            <img src="public/images/font_toneau.jpg" alt="Image de tonneau" aria-hidden="true" data-animation="fadeInRight" class="animated">
         </div>
     </div>
 </main>
