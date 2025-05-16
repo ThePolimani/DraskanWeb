@@ -20,6 +20,11 @@ main {
     width: 100%;
 }
 
+#accueil_3 div {
+    display: flex;
+    flex-direction: row;
+}
+
 h1 {
     font-family: "Lancelot", sans-serif;
     font-size: 80px;
