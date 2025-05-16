@@ -51,6 +51,10 @@ header h1 {
     color: #ffffff;
 }
 
+.partner-card p {
+  color: white;
+}
+
 .partner-card:hover {
   transform: scale(1.05);
 }
