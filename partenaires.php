@@ -2,7 +2,7 @@
 require_once 'app/config.php';
 
 try {
-    $stmt = $pdo->query("SELECT * FROM partenaires"); // Attention à l'orthographe de "partenaires"
+    $stmt = $pdo->query("SELECT * FROM partenaires");
     
     $partenaires = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
