@@ -11,7 +11,7 @@
 
 
     </div>
-    <div id="accueil_3">
+    <div id="accueil_3" class="animatedList" data-animation="fadeInLeft" data-reset-delay data-leaf-only>
         <h2>Notre histoire :</h2>
         <div>
             <p>Dans une contrée nordique balayée par les vents, les forêts profondes cachent un secret ancestral. Là, 
@@ -22,7 +22,7 @@
                 et la fraîcheur éclatante de la menthe, ils brassèrent une bière unique. À chaque gorgée de Draskan, 
                 c’est comme si l’on sentait ce vent nordique caresser la peau, éveillant les sens avec sa force et sa fraîcheur.
             </p>
-            <img src="public/images/font_toneau.jpg" alt="Image de tonneau" aria-hidden="true">
+            <img src="public/images/font_toneau.jpg" alt="Image de tonneau" aria-hidden="true" data-animation="fadeInRight">
         </div>
     </div>
 </main>
