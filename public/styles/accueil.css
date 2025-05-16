@@ -2,6 +2,7 @@ main {
     color: white;
     align-items: center;
     justify-content: center;
+    background-color: #000;
 }
 
 #accueil_1 {
@@ -18,15 +19,48 @@ main {
 #accueil_2, #accueil_3 {
     background-color: #000;
     width: 100%;
+    padding: 0 60px;
+    margin: 10px 0;
 }
 
 #accueil_3 div {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+#accueil_3 h2 {
+    margin: 0 0 30px 30px;
+}
+
+#accueil_3 p {
+    line-height: 24px;
+    font-size: 18px;
+    max-width: 650px;
+}
+
+#accueil_3 img {
+    height: 400px;
 }
 
 h1 {
     font-family: "Lancelot", sans-serif;
     font-size: 80px;
     font-weight: normal;
+}
+
+@media screen and (max-width: 1110px) {
+    h1 {
+        font-size: 50px;
+    }
+    #accueil_1 {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #accueil_2, #accueil_3 {
+        flex-direction: column;
+        align-items: center;
+    }
+    
 }
