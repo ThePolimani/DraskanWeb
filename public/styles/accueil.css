@@ -16,6 +16,13 @@ main {
     background-position: center;
 }
 
+#accueil_1 p {
+    background-color: #69362D;
+    padding: 18px;
+    width: fit-content;
+    border-radius: 20px;
+}
+
 #accueil_2, #accueil_3 {
     background-color: #000;
     width: 100%;
