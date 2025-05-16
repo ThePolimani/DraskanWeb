@@ -18,9 +18,18 @@ main {
 
 #accueil_1 p {
     background-color: #69362D;
-    padding: 18px;
+    padding: 17px;
     width: fit-content;
+    border: 2px solid #69362D;
     border-radius: 20px;
+    transition: 0.2s;
+}
+
+#accueil_1 p:hover {
+    background-color: #69362dd4;
+    cursor: pointer;
+    transform: scale(1.05);
+    border-color: #e3e3e3;
 }
 
 #accueil_2, #accueil_3 {
