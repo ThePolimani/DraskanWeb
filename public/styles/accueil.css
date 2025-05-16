@@ -50,17 +50,6 @@ h1 {
 }
 
 @media screen and (max-width: 1110px) {
-    h1 {
-        font-size: 50px;
-    }
-    #accueil_1 {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    #accueil_2, #accueil_3 {
-        flex-direction: column;
-        align-items: center;
-    }
+    
     
 }
