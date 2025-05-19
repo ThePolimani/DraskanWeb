@@ -41,6 +41,10 @@ a:hover {
     animation-delay: 0s !important;
 }
 
+.prevent-animations * {
+    animation: none !important;
+    transition: none !important;
+}
 
 
 /* HEADER */
