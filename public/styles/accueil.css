@@ -65,6 +65,23 @@ h1 {
     font-weight: normal;
 }
 
+#accueil_4 {
+    width: 100%;
+    }
+
+.partner-logo {
+    width: 200px;
+    height: auto;
+    margin: 20px;
+}
+
+.partners {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+}
+
 @media screen and (max-width: 1110px) {
     
     
