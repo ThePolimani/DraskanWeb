@@ -25,12 +25,12 @@
             <img src="public/images/font_toneau.jpg" alt="Image de tonneau" aria-hidden="true" data-animation="fadeInRight" class="animated">
         </div>
     </div>
-    <div id="accueil_4">
+    <div id="accueil_4" class="animatedList" data-animation="fadeInLeft" data-reset-delay data-leaf-only>
         <h2>Nos Partenaires :</h2>
-        <div class="partners animatedList" data-animation="fadeInLeft" data-reset-delay>
+        <div class="partners">
             <?php foreach ($partenaires as $partenaire): ?>
             <div class="partner-card">
-                <a href=""><img src="<?= htmlspecialchars($partenaire['logo_url']) ?>" alt="<?= htmlspecialchars($partenaire['nom']) ?>" class="partner-logo" /></a>
+                <a href="partenaires"><img src="<?= htmlspecialchars($partenaire['logo_url']) ?>" alt="<?= htmlspecialchars($partenaire['nom']) ?>" class="partner-logo" /></a>
             </div>
             <?php endforeach; ?>
         </div>
