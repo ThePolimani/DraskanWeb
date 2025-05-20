@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier d'achat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .panier-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+        
+        .panier-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .panier-popup {
+            position: fixed;
+            top: 80px;
+            right: -400px; /* Déplacé hors écran */
+            width: 350px;
+            height: auto;
+            max-height: calc(100vh - 100px); /* Limite la hauteur et permet le scroll */
+            background: white;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            border-radius: 12px 0 0 12px;
+            transition: 0.4s cubic-bezier(0.8, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .panier-popup.open {
+            right: 0; /* Animation vers la position visible */
+        }
+        
+        .panier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            flex-shrink: 0; /* Empêche le header de rétrécir */
+        }
+
+        .panier-header h2 {
+            margin: 5px 0;
+        }
+        
+        .close-panier {
+            background: none;
+            border: none;
+            font-size: 40px;
+            cursor: pointer;
+            margin-right: 5px;
+            padding: 0 11px;
+            transition: transform 0.2s;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        .close-panier:hover {
+            transform: rotate(90deg);
+        }
+        
+        .panier-items {
+            margin-bottom: 20px;
+            flex-grow: 1; /* Permet à cette section de grandir et de pousser le total/checkout vers le bas */
+            overflow-y: auto; /* Ajout du scroll pour les items si nombreux */
+            overflow-x: hidden;
+        }
+        
+        .panier-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            /* Animation retirée d'ici et gérée par JS/classe spécifique */
+        }
+
+        .panier-item.new-item-animation { /* Classe pour l'animation des nouveaux items */
+            opacity: 0;
+            transform: translateX(20px);
+            animation: fadeInItem 0.3s forwards;
+        }
+        
+        @keyframes fadeInItem {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            background: #f0f0f0;
+            border: none;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            background: #ddd;
+        }
+        
+        .item-quantity {
+            margin: 0 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        .remove-item {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .remove-item:hover {
+            background: #cc0000;
+        }
+        
+        .panier-footer { /* Conteneur pour le total et le bouton checkout */
+            flex-shrink: 0; /* Empêche le footer de rétrécir */
+        }
+
+        .panier-total {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+            /* margin-top: 20px; Retiré, géré par le padding du footer */
+        }
+        
+        .total-price {
+            display: inline-block;
+        }
+        
+        /* Animation .pulse retirée pour le prix total */
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        
+        .checkout-btn:hover {
+            background: #3e8e41;
+            transform: translateY(-2px);
+        }
+        
+        .checkout-btn:active {
+            transform: translateY(0);
+        }
+        
+        .produit-panier {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: box-shadow 0.2s;
+        }
+        
+        .produit-panier:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .add-to-panier {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        
+        .add-to-panier:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+        
+        .add-to-panier:active {
+            transform: translateY(0);
+        }
+        
+        .added { /* Animation pour le bouton "Ajouter au panier" */
+            animation: addedPulse 0.5s; /* Renommée pour éviter confusion avec l'ancienne pulse du prix */
+        }
+        
+        @keyframes addedPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .panier-count-pulse { /* Animation pour le compteur du panier */
+            animation: countPulseAnimation 0.5s;
+        }
+
+        @keyframes countPulseAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Boutique en ligne</h1>
+    
+    <div class="produit-panier">
+        <h3>Produit 1</h3>
+        <p>Prix: 19.99€</p>
+        <button class="add-to-panier" data-id="1" data-name="Produit 1" data-price="19.99">Ajouter au panier</button>
+    </div>
+    
+    <div class="produit-panier">
+        <h3>Produit 2</h3>
+        <p>Prix: 29.99€</p>
+        <button class="add-to-panier" data-id="2" data-name="Produit 2" data-price="29.99">Ajouter au panier</button>
+    </div>
+    
+    <div class="produit-panier">
+        <h3>Produit 3</h3>
+        <p>Prix: 9.99€</p>
+        <button class="add-to-panier" data-id="3" data-name="Produit 3" data-price="9.99">Ajouter au panier</button>
+    </div>
+
+    <p>test <br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+    
+    <button class="panier-button" id="panierButton">
+        Panier (<span id="panierCount">0</span>)
+    </button>
+    
+    <div class="panier-popup" id="panierPopup">
+        <div class="panier-header">
+            <h2>Votre Panier</h2>
+            <button class="close-panier" id="closepanier">&times;</button>
+        </div>
+        
+        <div class="panier-items" id="panierItems">
+            <p>Votre panier est vide</p>
+        </div>
+        
+        <div class="panier-footer"> <div class="panier-total">
+                Total: <span class="total-price" id="panierTotal">0.00</span>€
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Passer la commande</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Éléments du DOM
+            const panierButton = document.getElementById('panierButton');
+            const panierPopup = document.getElementById('panierPopup');
+            const closepanier = document.getElementById('closepanier');
+            const panierItems = document.getElementById('panierItems');
+            const panierCount = document.getElementById('panierCount');
+            const panierTotalEl = document.getElementById('panierTotal'); // Renommé pour clarté
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const addTopanierButtons = document.querySelectorAll('.add-to-panier');
+            
+            // Charger le panier depuis localStorage
+            let panier = JSON.parse(localStorage.getItem('panier')) || [];
+            let lastAddedItemId = null; // Pour l'animation du nouvel item
+            let priceAnimationFrameId = null; // Pour l'animation du prix
+
+            // Ouvrir/fermer le panier
+            panierButton.addEventListener('click', function() {
+                panierPopup.classList.toggle('open');
+                if (panierPopup.classList.contains('open')) {
+                    lastAddedItemId = null; // Pas d'animation spéciale à l'ouverture
+                    updatepanierDisplay();
+                }
+            });
+            
+            closepanier.addEventListener('click', function() {
+                panierPopup.classList.remove('open');
+            });
+            
+            // Ajouter un produit au panier
+            addTopanierButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = button.getAttribute('data-id');
+                    const name = button.getAttribute('data-name');
+                    const price = parseFloat(button.getAttribute('data-price'));
+                    
+                    button.classList.add('added');
+                    setTimeout(() => {
+                        button.classList.remove('added');
+                    }, 500);
+                    
+                    addTopanier(id, name, price);
+                });
+            });
+            
+            // Passer la commande
+            checkoutBtn.addEventListener('click', function() {
+                if (panier.length > 0) {
+                    alert('Commande passée! Total: ' + getpanierTotal().toFixed(2) + '€');
+                    panier = [];
+                    savepanier();
+                    updatepanierDisplay();
+                } else {
+                    alert('Votre panier est vide!');
+                }
+            });
+            
+            // Fonction pour ajouter un article au panier
+            function addTopanier(id, name, price) {
+                const existingItem = panier.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                    lastAddedItemId = null; // Ce n'est pas un nouvel item dans la liste
+                } else {
+                    panier.push({ id, name, price, quantity: 1 });
+                    lastAddedItemId = id; // Marquer cet item comme nouveau pour l'animation
+                }
+                
+                savepanier();
+                updatepanierDisplay();
+                
+                // Afficher le panier quand on ajoute un produit, s'il n'est pas déjà ouvert
+                if (!panierPopup.classList.contains('open')) {
+                   panierPopup.classList.add('open');
+                }
+            }
+            
+            // Fonction pour sauvegarder le panier dans localStorage
+            function savepanier() {
+                localStorage.setItem('panier', JSON.stringify(panier));
+                updatepanierCount();
+            }
+            
+            // Fonction pour mettre à jour l'affichage du panier
+            function updatepanierDisplay() {
+                if (panier.length === 0) {
+                    panierItems.innerHTML = '<p>Votre panier est vide</p>';
+                    updateTotalPriceAnimated(0);
+                    lastAddedItemId = null; 
+                    updatepanierCount(); // Assurer que le compteur est à jour
+                    return;
+                }
+                
+                panierItems.innerHTML = ''; // Vider les items actuels
+                panier.forEach(item => { // Pas besoin de l'index ici pour l'animation
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'panier-item';
+
+                    if (item.id === lastAddedItemId) {
+                        itemElement.classList.add('new-item-animation');
+                        itemElement.addEventListener('animationend', () => {
+                            itemElement.classList.remove('new-item-animation');
+                        }, { once: true });
+                    }
+
+                    itemElement.innerHTML = `
+                        <div class="item-info">
+                            <h4>${item.name}</h4>
+                            <p>${item.price.toFixed(2)}€</p>
+                        </div>
+                        <div class="item-actions">
+                            <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                            <span class="item-quantity">${item.quantity}</span>
+                            <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                            <button class="remove-item" data-id="${item.id}">Supprimer</button>
+                        </div>
+                    `;
+                    panierItems.appendChild(itemElement);
+                });
+                
+                // Réinitialiser après le rendu, pour que la prochaine mise à jour ne ré-anime pas
+                if (lastAddedItemId) {
+                    lastAddedItemId = null;
+                }
+
+                // Ajouter les événements pour les nouveaux boutons
+                attachItemEventListeners();
+                
+                updateTotalPriceAnimated(getpanierTotal());
+                updatepanierCount();
+            }
+
+            function attachItemEventListeners() {
+                document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = button.getAttribute('data-id');
+                        decreaseQuantity(id);
+                    });
+                });
+                
+                document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = button.getAttribute('data-id');
+                        increaseQuantity(id);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = button.getAttribute('data-id');
+                        removeFrompanier(id);
+                    });
+                });
+            }
+            
+            // Fonction pour animer la mise à jour du prix total
+            function updateTotalPriceAnimated(newTotalValue) {
+                const currentTotalText = panierTotalEl.textContent.replace('€', '').trim();
+                let currentTotal = parseFloat(currentTotalText) || 0;
+                const targetTotal = parseFloat(newTotalValue);
+
+                if (Math.abs(currentTotal - targetTotal) < 0.01) { // Si la différence est négligeable
+                    panierTotalEl.textContent = targetTotal.toFixed(2);
+                    return;
+                }
+
+                if (priceAnimationFrameId) {
+                    cancelAnimationFrame(priceAnimationFrameId);
+                }
+
+                const duration = 300; // ms
+                const startTime = performance.now();
+
+                function animate(currentTime) {
+                    const elapsedTime = currentTime - startTime;
+                    const progress = Math.min(elapsedTime / duration, 1);
+                    
+                    const animatedValue = currentTotal + (targetTotal - currentTotal) * progress;
+                    panierTotalEl.textContent = animatedValue.toFixed(2);
+
+                    if (progress < 1) {
+                        priceAnimationFrameId = requestAnimationFrame(animate);
+                    } else {
+                        panierTotalEl.textContent = targetTotal.toFixed(2); // Assurer la valeur finale exacte
+                        priceAnimationFrameId = null;
+                    }
+                }
+                priceAnimationFrameId = requestAnimationFrame(animate);
+            }
+            
+            // Fonctions pour modifier la quantité
+            function increaseQuantity(id) {
+                const item = panier.find(item => item.id === id);
+                if (item) {
+                    item.quantity += 1;
+                    savepanier();
+                    lastAddedItemId = null; // Pas un nouvel ajout, donc pas d'animation d'item
+                    updatepanierDisplay();
+                }
+            }
+            
+            function decreaseQuantity(id) {
+                const item = panier.find(item => item.id === id);
+                if (item) {
+                    if (item.quantity > 1) { // Ne décrémenter que si > 1
+                        item.quantity -= 1;
+                        savepanier();
+                        lastAddedItemId = null; // Pas un nouvel ajout
+                        updatepanierDisplay();
+                    }
+                    // Si la quantité est 1, ne rien faire (on ne supprime plus ici)
+                }
+            }
+            
+            function removeFrompanier(id) {
+                panier = panier.filter(item => item.id !== id);
+                savepanier();
+                lastAddedItemId = null; // Pas un nouvel ajout
+                updatepanierDisplay();
+            }
+            
+            // Calculer le total du panier
+            function getpanierTotal() {
+                return panier.reduce((total, item) => total + (item.price * item.quantity), 0);
+            }
+            
+            // Mettre à jour le compteur du panier
+            function updatePanierCount() {
+                const count = panier.reduce((total, item) => total + item.quantity, 0);
+
+                if (panierButton) {
+                    let imageNumber = count > 9 ? '9plus' : count;
+                    panierButton.src = `images/panier-${imageNumber}.png`;
+
+                    // Animation (facultative)
+                    panierButton.classList.add('panier-pulse');
+                    setTimeout(() => {
+                        panierButton.classList.remove('panier-pulse');
+                    }, 300);
+                }
+            }
+            
+            // Initialiser l'affichage au chargement
+            updatepanierCount();
+        });
+    </script>
+</body>
+</html>
