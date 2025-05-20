@@ -4,7 +4,7 @@
             <h1>DRASKAN</h1>
             <p>Afficher les produits</p>
         </div>
-        <img src="public/images/bouteille_mockup.png" alt="Bouteille Draskan" class="animated" data-animation="fadeInRight" data-start-delay="1">
+        <img src="public/images/bouteille_mockup.png" alt="Bouteille Draskan" class="animated no-select" data-animation="fadeInRight" data-start-delay="1">
     </div>
     <div id="accueil_2">
         <h2>Nos Produits :</h2>
@@ -30,11 +30,7 @@
         <div class="partners animatedList" data-animation="fadeInLeft" data-reset-delay>
             <?php foreach ($partenaires as $partenaire): ?>
             <div class="partner-card">
-                <img src="<?= htmlspecialchars($partenaire['logo_url']) ?>" alt="Logo <?= htmlspecialchars($partenaire['nom']) ?>" class="partner-logo" />
-                <h2><?= htmlspecialchars($partenaire['nom']) ?></h2>
-                <?php if (!empty($partenaire['description'])): ?>
-                    <p><?= htmlspecialchars($partenaire['description']) ?></p>
-                <?php endif; ?>
+                <a href=""><img src="<?= htmlspecialchars($partenaire['logo_url']) ?>" alt="<?= htmlspecialchars($partenaire['nom']) ?>" class="partner-logo" /></a>
             </div>
             <?php endforeach; ?>
         </div>
