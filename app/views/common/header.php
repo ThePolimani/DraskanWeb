@@ -18,7 +18,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lancelot&display=swap" rel="stylesheet">
     <script src="public/scripts/verifage.js"></script>
     <script src="public/scripts/main.js"></script>
-	<link rel="apple-touch-icon" href="/app-icon.png">
+	<!--<link rel="apple-touch-icon" href="/app-icon.png">-->
 </head>
 <body>
     <div id="ageVerificationModal">
@@ -65,6 +65,22 @@
             <input type="text" id="search" placeholder="Rechercher...">
             <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
             <a href="newsletter.html"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
-            <button id="panier"><img src="public/images/icon_panier.png" alt="Panier" title="Panier"></button>
+            <button id="panier"><img src="public/images/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
         </div>
     </header>
+    <div class="panier-popup" id="panierPopup">
+        <div class="panier-header">
+            <h2 class="no-delay">Votre Panier</h2>
+            <button class="close-panier" id="closepanier">&times;</button>
+        </div>
+
+        <div class="panier-items" id="panierItems">
+            <p>Votre panier est vide</p>
+        </div>
+        
+        <div class="panier-footer"> <div class="panier-total">
+                Total: <span class="total-price" id="panierTotal">0.00</span>€
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Passer la commande</button>
+        </div>
+    </div>
