@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrousel de Produits</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            background-color: #f5f5f5;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 1rem 0;
+        }
+
+        .carousel-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .carousel {
+            display: flex;
+            width: calc(300% + 80px); /* Largeur suffisante pour tous les produits + espace */
+            animation: scroll 30s linear infinite;
+        }
+
+        .carousel:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-100% / 3));
+            }
+        }
+
+        .product {
+            min-width: 350px;
+            margin: 0 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e63946;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .carousel-nav button {
+            pointer-events: all;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .carousel-nav button:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .carousel-nav button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="carousel-title">Nos Produits Phares</h1>
+    
+    <div class="carousel-container">
+        <div class="carousel" id="carousel">
+            <!-- Produit 1 -->
+            <div class="product" data-id="1">
+                <img src="https://via.placeholder.com/300x180?text=Produit+1" alt="Produit 1" class="product-image">
+                <h3 class="product-title">Produit 1</h3>
+                <p class="product-price">19.99 €</p>
+                <button class="btn">Voir plus</button>
+            </div>
+            
+            <!-- Produit 2 -->
+            <div class="product" data-id="2">
+                <img src="https://via.placeholder.com/300x180?text=Produit+2" alt="Produit 2" class="product-image">
+                <h3 class="product-title">Produit 2</h3>
+                <p class="product-price">24.99 €</p>
+                <button class="btn">Voir plus</button>
+            </div>
+            
+            <!-- Produit 3 -->
+            <div class="product" data-id="3">
+                <img src="https://via.placeholder.com/300x180?text=Produit+3" alt="Produit 3" class="product-image">
+                <h3 class="product-title">Produit 3</h3>
+                <p class="product-price">29.99 €</p>
+                <button class="btn">Voir plus</button>
+            </div>
+            
+            <!-- Produit 4 -->
+            <div class="product" data-id="4">
+                <img src="https://via.placeholder.com/300x180?text=Produit+4" alt="Produit 4" class="product-image">
+                <h3 class="product-title">Produit 4</h3>
+                <p class="product-price">34.99 €</p>
+                <button class="btn">Voir plus</button>
+            </div>
+            
+            <!-- Produit 5 -->
+            <div class="product" data-id="5">
+                <img src="https://via.placeholder.com/300x180?text=Produit+5" alt="Produit 5" class="product-image">
+                <h3 class="product-title">Produit 5</h3>
+                <p class="product-price">39.99 €</p>
+                <button class="btn">Voir plus</button>
+            </div>
+            
+            <!-- Produit 6 -->
+            <div class="product" data-id="6">
+                <img src="https://via.placeholder.com/300x180?text=Produit+6" alt="Produit 6" class="product-image">
+                <h3 class="product-title">Produit 6</h3>
+                <p class="product-price">44.99 €</p>
+                <button class="btn">Voir plus</button>
+            </div>
+            
+            <!-- Produit 7 -->
+            <div class="product" data-id="7">
+                <img src="https://via.placeholder.com/300x180?text=Produit+7" alt="Produit 7" class="product-image">
+                <h3 class="product-title">Produit 7</h3>
+                <p class="product-price">49.99 €</p>
+                <button class="btn">Voir plus</button>
+            </div>
+        </div>
+        
+        <div class="carousel-nav">
+            <button id="prevBtn">&#10094;</button>
+            <button id="nextBtn">&#10095;</button>
+        </div>
+    </div>
+
+    <script>
+        const carousel = document.getElementById('carousel');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const products = document.querySelectorAll('.product');
+const totalProducts = 7; // Nombre réel de produits
+
+let scrollSpeed = 1; // Vitesse normale (positif = droite, négatif = gauche)
+const baseSpeed = 1; // Vitesse de base
+let animationId;
+let isManual = false;
+
+// Dupliquer les produits pour la boucle infinie
+function cloneProducts() {
+    const firstTwo = Array.from(products).slice(0, 2);
+    firstTwo.forEach(product => {
+        const clone = product.cloneNode(true);
+        carousel.appendChild(clone);
+    });
+}
+
+function animate() {
+    // Mettre à jour la position
+    const currentTransform = window.getComputedStyle(carousel).getPropertyValue('transform');
+    let currentX = 0;
+    
+    if (currentTransform !== 'none') {
+        const matrix = currentTransform.match(/^matrix\((.+)\)$/)[1].split(', ');
+        currentX = parseInt(matrix[4]);
+    }
+    
+    // Calculer le nouvel offset
+    let newX = currentX - scrollSpeed;
+    
+    // Gérer la boucle infinie
+    const carouselWidth = carousel.scrollWidth / 3;
+    if (newX <= -carouselWidth) newX = 0;
+    if (newX > 0) newX = -carouselWidth;
+    
+    // Appliquer la transformation
+    carousel.style.transform = `translateX(${newX}px)`;
+    
+    animationId = requestAnimationFrame(animate);
+}
+
+// Contrôles flèches
+nextBtn.addEventListener('click', () => {
+    if (scrollSpeed > 0) {
+        scrollSpeed = baseSpeed * 3; // Accélère vers la droite
+    } else {
+        scrollSpeed = baseSpeed; // Inverse vers la droite
+    }
+    isManual = true;
+    setTimeout(() => {
+        if (isManual) {
+            scrollSpeed = baseSpeed; // Revenir à vitesse normale après 2s
+            isManual = false;
+        }
+    }, 2000);
+});
+
+prevBtn.addEventListener('click', () => {
+    if (scrollSpeed < 0) {
+        scrollSpeed = baseSpeed * -3; // Accélère vers la gauche
+    } else {
+        scrollSpeed = -baseSpeed; // Inverse vers la gauche
+    }
+    isManual = true;
+    setTimeout(() => {
+        if (isManual) {
+            scrollSpeed = baseSpeed; // Revenir à vitesse normale après 2s
+            isManual = false;
+        }
+    }, 2000);
+});
+
+// Pause au survol
+carousel.addEventListener('mouseenter', () => {
+    const savedSpeed = scrollSpeed;
+    scrollSpeed = 0;
+    carousel.addEventListener('mouseleave', () => {
+        scrollSpeed = savedSpeed !== 0 ? savedSpeed : baseSpeed;
+    }, { once: true });
+});
+
+// Initialisation
+cloneProducts();
+animate();
+    </script>
+</body>
+</html>
