@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
             if (panierImg) {
                 let imageNumber = count > 9 ? '9plus' : count;
-                panierImg.src = `public/images/panier-${imageNumber}.png`;
+                panierImg.src = `public/images/panier/panier-${imageNumber}.png`;
 
                 // Animation (facultative)
                 panierImg.classList.add('panier-pulse');

@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
             div.classList.add('product');
             div.dataset.id = product.id; // Assurez-vous que l'API renvoie 'id'
             div.innerHTML = `
-                <img src="${product.img}" alt="${product.name}" class="product-image">
-                <h3 class="product-title">${product.name}</h3>
+                <img src="${product.img}" alt="${product.nom}" class="product-image">
+                <h3 class="product-title">${product.nom}</h3>
                 <p class="product-price">${product.prix}</p>
                 <button class="btn">Voir détails</button>
             `;
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             // Pour une meilleure robustesse, stocker les données JSON initiales.
                     return { // Ceci est une tentative de recréer les données. Mieux vaut stocker le fetchedProductData
                         id: el.dataset.id,
-                        name: el.querySelector('.product-title').textContent,
+                        nom: el.querySelector('.product-title').textContent,
                         prix: el.querySelector('.product-price').textContent,
                         img: el.querySelector('.product-image').src
                     };

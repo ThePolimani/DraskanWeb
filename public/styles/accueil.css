@@ -142,9 +142,9 @@ h1 {
         }
 
         .product {
-            min-width: 350px;
+            min-width: 330px;
             margin: 0 15px;
-            background: white;
+            background: linear-gradient(#69362D, #69362d6f);
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             padding: 1.8rem;
@@ -174,7 +174,7 @@ h1 {
         .product-title {
             font-size: 1.3rem;
             margin-bottom: 0.2rem;
-            color: #34495e;
+            color: white;
             text-align: center;
             font-weight: 500;
         }
@@ -249,6 +249,7 @@ h1 {
             font-size: 1.2rem;
             padding: 2rem;
             color: #555;
+            margin-left: 10vw;
         }
 
 @media screen and (max-width: 1110px) {

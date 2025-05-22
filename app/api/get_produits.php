@@ -22,7 +22,7 @@ try {
 
         $products[] = [
             'id' => (int)$row['id'],
-            'name' => $row['name'],
+            'nom' => $row['nom'],
             'prix' => $formatted_price, // Prix formaté
             'img' => $row['image_url']   // Renommé 'img' pour correspondre à ce que le JS attend
         ];

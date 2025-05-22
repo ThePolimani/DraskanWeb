@@ -68,7 +68,7 @@
             <input type="text" id="search" placeholder="Rechercher...">
             <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
             <a href="newsletter.html"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
-            <button id="panier"><img src="public/images/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
+            <button id="panier"><img src="public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
         </div>
     </header>
     <div class="panier-popup" id="panierPopup">
