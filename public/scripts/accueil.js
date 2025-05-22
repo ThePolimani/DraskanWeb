@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (!isHovering && !isTransitioningCard) { 
                             startAutoScroll();
                         }
-                    }, 50); 
+                    }, 300); 
                 }
             };
             carousel.addEventListener('transitionend', onTransitionEnd);

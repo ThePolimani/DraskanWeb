@@ -164,11 +164,10 @@ h1 {
             width: 100%;
             max-width: 280px;
             height: 150px;
-            object-fit: cover;
+            object-fit: contain;
             margin-bottom: 1.2rem;
-            background-color: #f8f9fa;
+            background-color: #f8f9fa24;
             border-radius: 8px;
-            border: 1px solid #eee;
         }
 
         .product-title {
