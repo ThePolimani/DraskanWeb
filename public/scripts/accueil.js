@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
             div.classList.add('product');
             div.dataset.id = product.id; // Assurez-vous que l'API renvoie 'id'
             div.innerHTML = `
-                <img src="${product.img}" alt="${product.nom}" class="product-image">
                 <h3 class="product-title">${product.nom}</h3>
+                <img src="${product.img}" alt="${product.nom}" class="product-image">
                 <p class="product-price">${product.prix}</p>
-                <button class="btn">Voir détails</button>
+                <button class="add-to-panier btn" data-id="${product.id}" data-name="${product.nom}" data-price="${product.prix}">Ajouté au panier</button>
             `;
             return div;
         }
@@ -85,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             prevBtn.disabled = false;
             nextBtn.disabled = false;
+            
+            addListenerForPanier()
         }
 
         function autoScrollLoop() {

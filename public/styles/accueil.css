@@ -142,7 +142,7 @@ h1 {
         }
 
         .product {
-            min-width: 330px;
+            min-width: 280px;
             margin: 0 15px;
             background: linear-gradient(#69362D, #69362d6f);
             border-radius: 12px;
@@ -161,18 +161,18 @@ h1 {
         }
 
         .product-image {
-            width: 100%;
             max-width: 280px;
-            height: 150px;
+            height: 160px;
             object-fit: contain;
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.5rem;
             background-color: #f8f9fa24;
             border-radius: 8px;
+            padding: 10px;
         }
 
         .product-title {
             font-size: 1.3rem;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.5rem;
             color: white;
             text-align: center;
             font-weight: 500;
@@ -187,8 +187,8 @@ h1 {
 
         .btn {
             padding: 0.7rem 1.5rem;
-            background-color: #3498db;
-            color: white;
+            background-color: #e6cfad;
+            color: black;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -198,7 +198,7 @@ h1 {
         }
 
         .btn:hover {
-            background-color: #2980b9;
+            background-color: #af9d81;
             transform: translateY(-2px);
         }
         .btn:active {
