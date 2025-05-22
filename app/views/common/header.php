@@ -18,6 +18,9 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lancelot&display=swap" rel="stylesheet">
     <script src="public/scripts/verifage.js"></script>
     <script src="public/scripts/main.js"></script>
+    <?php if (!empty($pageSpecificJS)): ?>
+        <script src="public/scripts/<?= $pageSpecificJS ?>"></script>
+    <?php endif; ?>
 	<!--<link rel="apple-touch-icon" href="/app-icon.png">-->
 </head>
 <body>

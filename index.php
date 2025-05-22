@@ -1,6 +1,6 @@
 <?php
 $pageSpecificCSS = 'accueil.css'; // Changez cette variable selon la page
-
+$pageSpecificJS = 'accueil.js'; // Changez cette variable selon la page
 include_once 'app/views/common/header.php';
 
 require_once 'app/config.php';

@@ -9,8 +9,18 @@
     <div id="accueil_2">
         <h2>Nos Produits :</h2>
 
+        <div class="carousel-container" id="carouselContainer">
+            <div class="carousel" id="carousel">
+                <div class="loading-message">Chargement des produits...</div>
+            </div>
 
+            <div class="carousel-nav">
+                <button id="prevBtn" aria-label="Produit précédent" disabled>&#10094;</button>
+                <button id="nextBtn" aria-label="Produit suivant" disabled>&#10095;</button>
+            </div>
+        </div>
     </div>
+    
     <div id="accueil_3" class="animatedList" data-animation="fadeInLeft" data-reset-delay data-leaf-only>
         <h2>Notre histoire :</h2>
         <div>

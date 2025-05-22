@@ -96,6 +96,161 @@ h1 {
     background-color: #69362D;
 }
 
+
+/*Carrousel */
+
+.carousel-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 1rem 0; 
+        }
+
+        .carousel-container::before,
+        .carousel-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none; 
+        }
+
+        .carousel-container::before {
+            left: 0;
+            background: linear-gradient(to right, #000000 20%, transparent);
+        }
+
+        .carousel-container::after {
+            right: 0;
+            background: linear-gradient(to left, #000000 20%, transparent);
+        }
+
+        .carousel {
+            display: flex;
+        }
+
+        .product {
+            min-width: 350px;
+            margin: 0 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.35s ease-out, box-shadow 0.35s ease-out;
+            flex-shrink: 0;
+        }
+
+        .product:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 280px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 1.2rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+            color: #34495e;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: calc(100% - 100px); 
+            left: 50px; 
+            right: 50px;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none; 
+            z-index: 10;
+        }
+
+        .carousel-nav button {
+            pointer-events: all;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ddd;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .carousel-nav button:hover {
+            background: white;
+            transform: scale(1.1); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .carousel-nav button:active {
+            transform: scale(1.05);
+        }
+        .loading-message, .error-message { /* Styles pour les messages de chargement/erreur */
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 2rem;
+            color: #555;
+        }
+
 @media screen and (max-width: 1110px) {
     
     
