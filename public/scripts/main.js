@@ -233,34 +233,60 @@ document.addEventListener("DOMContentLoaded", function() {
     let panier = JSON.parse(localStorage.getItem('panier')) || [];
     let lastAddedItemId = null; // Pour l'animation du nouvel item
     let priceAnimationFrameId = null; // Pour l'animation du prix
+
     // Ouvrir/fermer le panier
-    panierButton.addEventListener('click', function() {
+    panierButton.addEventListener('click', function(e) {
+        e.stopPropagation();
         panierPopup.classList.toggle('open');
         if (panierPopup.classList.contains('open')) {
-            lastAddedItemId = null; // Pas d'animation spéciale à l'ouverture
+            lastAddedItemId = null;
             updatepanierDisplay();
         }
     });
     
-    closepanier.addEventListener('click', function() {
+    closepanier.addEventListener('click', function(e) {
+        e.stopPropagation(); // Empêche l'événement de remonter
         panierPopup.classList.remove('open');
+    });
+
+    // Fermer le panier quand on clique en dehors
+    document.addEventListener('click', function(e) {
+        // Ne pas fermer si on clique sur un bouton "Ajouter au panier"
+        const isAddToCartButton = e.target.classList.contains('add-to-panier') || 
+                                 e.target.closest('.add-to-panier');
+        
+        if (panierPopup.classList.contains('open') && 
+            !panierPopup.contains(e.target) && 
+            e.target !== panierButton &&
+            !isAddToCartButton) {
+            panierPopup.classList.remove('open');
+        }
+    });
+
+    panierPopup.addEventListener('click', function(e) {
+        e.stopPropagation();
     });
     
     // Ajouter un produit au panier
-    addTopanierButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const id = button.getAttribute('data-id');
-            const name = button.getAttribute('data-name');
-            const price = parseFloat(button.getAttribute('data-price'));
-            
-            button.classList.add('added');
-            setTimeout(() => {
-                button.classList.remove('added');
-            }, 500);
-            
-            addTopanier(id, name, price);
+    function addTopanier(id, name, price) {
+        const existingItem = panier.find(item => item.id === id);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+            lastAddedItemId = null;
+        } else {
+            panier.push({ id, name, price, quantity: 1 });
+            lastAddedItemId = id;
+        }
+        
+        savepanier();
+        updatepanierDisplay();
+        
+        // Ouvrir le panier sans déclencher la fermeture
+        requestAnimationFrame(() => {
+            panierPopup.classList.add('open');
         });
-    });
+    }
 
     if (carouselContainer) {
         carouselContainer.addEventListener('click', function(event) {
@@ -285,12 +311,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Passer la commande
     checkoutBtn.addEventListener('click', function() {
         if (panier.length > 0) {
-            alert('Commande passée! Total: ' + getpanierTotal().toFixed(2) + '€');
-            panier = [];
+            window.location.href = '/paiement';
             savepanier();
             updatepanierDisplay();
-        } else {
-            alert('Votre panier est vide!');
         }
     });
     
@@ -330,6 +353,8 @@ document.addEventListener("DOMContentLoaded", function() {
             updatePanierCount(); // Assurer que le compteur est à jour
             return;
         }
+
+        updateCheckoutButton();
         
         panierItems.innerHTML = ''; // Vider les items actuels
         panier.forEach(item => { // Pas besoin de l'index ici pour l'animation
@@ -385,6 +410,7 @@ document.addEventListener("DOMContentLoaded", function() {
             button.addEventListener('click', function() {
                 const id = button.getAttribute('data-id');
                 removeFrompanier(id);
+                updateCheckoutButton();
             });
         });
     }
@@ -417,6 +443,14 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
         priceAnimationFrameId = requestAnimationFrame(animate);
+    }
+
+    function updateCheckoutButton() {
+        if (panier.length > 0) {
+            checkoutBtn.disabled = false;
+        } else {
+            checkoutBtn.disabled = true;
+        }
     }
     
     // Fonctions pour modifier la quantité
@@ -477,4 +511,5 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Initialiser l'affichage au chargement
     updatePanierCount();
+    updateCheckoutButton();
 });

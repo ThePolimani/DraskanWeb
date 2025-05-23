@@ -84,6 +84,6 @@
         <div class="panier-footer"> <div class="panier-total">
                 Total: <span class="total-price" id="panierTotal">0.00</span>€
             </div>
-            <a href="/paiement">Passer la commande</a>
+            <button class="checkout-btn" id="checkoutBtn" disabled>Passer la commande</button>
         </div>
     </div>

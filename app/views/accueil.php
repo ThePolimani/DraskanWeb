@@ -2,7 +2,7 @@
     <div id="accueil_1">
         <div class="animatedList" data-animation="fadeInLeft" >
             <h1>DRASKAN</h1>
-            <p>Afficher les produits</p>
+            <a href="produits"><p>Afficher les produits</p></a>
         </div>
         <img src="public/images/bouteille_mockup.png" alt="Bouteille Draskan" class="animated no-select" data-animation="fadeInRight" data-start-delay="1">
     </div>
