@@ -85,8 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             prevBtn.disabled = false;
             nextBtn.disabled = false;
-            
-            addListenerForPanier()
         }
 
         function autoScrollLoop() {

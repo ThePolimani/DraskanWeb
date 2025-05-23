@@ -142,12 +142,12 @@ h1 {
         }
 
         .product {
-            min-width: 280px;
+            min-width: 260px;
             margin: 0 15px;
             background: linear-gradient(#69362D, #69362d6f);
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            padding: 1.8rem;
+            padding: 1.6rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -161,11 +161,11 @@ h1 {
         }
 
         .product-image {
-            max-width: 280px;
-            height: 160px;
+            max-width: 290px;
+            height: 180px;
             object-fit: contain;
             margin-bottom: 0.5rem;
-            background-color: #f8f9fa24;
+            background-color: #f1f1f112;
             border-radius: 8px;
             padding: 10px;
         }
@@ -186,13 +186,12 @@ h1 {
         }
 
         .btn {
-            padding: 0.7rem 1.5rem;
+            padding: 0.6rem 1rem;
             background-color: #e6cfad;
             color: black;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 1rem;
             font-weight: 500;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }

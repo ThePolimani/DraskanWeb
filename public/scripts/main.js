@@ -227,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const panierTotalEl = document.getElementById('panierTotal'); // Renommé pour clarté
     const checkoutBtn = document.getElementById('checkoutBtn');
     const addTopanierButtons = document.querySelectorAll('.add-to-panier');
+    const carouselContainer = document.getElementById('carousel');
     
     // Charger le panier depuis localStorage
     let panier = JSON.parse(localStorage.getItem('panier')) || [];
@@ -260,6 +261,26 @@ document.addEventListener("DOMContentLoaded", function() {
             addTopanier(id, name, price);
         });
     });
+
+    if (carouselContainer) {
+        carouselContainer.addEventListener('click', function(event) {
+        // Vérifie si l'élément cliqué (event.target) a la classe "add-to-panier"
+        if (event.target.classList.contains('add-to-panier')) {
+            const button = event.target;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const price = parseFloat(button.getAttribute('data-price'));
+            
+            button.classList.add('added');
+            setTimeout(() => {
+                button.classList.remove('added');
+            }, 500);
+            
+            addTopanier(id, name, price);
+          
+        }
+      });
+    }
     
     // Passer la commande
     checkoutBtn.addEventListener('click', function() {

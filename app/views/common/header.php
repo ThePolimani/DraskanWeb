@@ -60,14 +60,14 @@
     <header class="animatedList" data-animation="fadeIn" data-reset-delay data-leaf-only>
         <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
         <nav>
-            <a href="produits.html" id="link_produits">Produits</a>
-            <a href="partenaires.html" id="link_partenaires">Partenaires</a>
-            <a href="contact.html" id="link_contact">Nous Contactez</a>
+            <a href="produits" id="link_produits">Produits</a>
+            <a href="partenaires" id="link_partenaires">Partenaires</a>
+            <a href="contact" id="link_contact">Nous Contactez</a>
         </nav>
         <div id="tools">
             <input type="text" id="search" placeholder="Rechercher...">
             <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
-            <a href="newsletter.html"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
+            <a href="newsletter"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
             <button id="panier"><img src="public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
         </div>
     </header>
@@ -84,6 +84,6 @@
         <div class="panier-footer"> <div class="panier-total">
                 Total: <span class="total-price" id="panierTotal">0.00</span>€
             </div>
-            <button class="checkout-btn" id="checkoutBtn">Passer la commande</button>
+            <a href="/paiement">Passer la commande</a>
         </div>
     </div>

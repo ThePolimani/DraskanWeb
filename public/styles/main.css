@@ -15,12 +15,14 @@ html, body {
 body {
     flex: 1;
     flex-grow: 1;
+    background-color: #000;
 }
 
 main {
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-top: 80px;
 }
 
 a {
@@ -54,15 +56,53 @@ a:hover {
 }
 
 
+::-moz-selection { 
+	color: #000;
+	background: #e6cfad;
+  }
+  
+::selection {
+	color: #000;
+	background: #e6cfad;
+}
+
+/*scroll bar*/
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+  
+::-webkit-scrollbar-track {
+	background-color: black;
+}
+  
+::-webkit-scrollbar-thumb {
+    background-color: #69362D;
+	border-radius: 6px 0 0 6px;
+	border: 3px solid #1f0f0d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #5f332b;
+    cursor: grab;
+}
+
+::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+}
+
+
 /* HEADER */
 
 header {
-    background-color: #000;
+    background-color: #000000bf;
     width: 100%;
     height: 80px;
     color: white;
     display: flex;
     align-items: center;
+    z-index: 1000;
+    position: fixed;
 }
 
 #logo_header {
