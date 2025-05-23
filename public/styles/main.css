@@ -378,15 +378,14 @@ button {
 
 .checkout-btn:hover:enabled {
     background: #3e8e41;
-    transform: translateY(-2px);
 }
 
 .checkout-btn:active {
     transform: translateY(0);
 }
 
-.added { /* Animation pour le bouton "Ajouter au panier" */
-    animation: addedPulse 0.5s; /* Renommée pour éviter confusion avec l'ancienne pulse du prix */
+.added {
+    animation: addedPulse 0.5s;
 }
 
 @keyframes addedPulse {

@@ -7,14 +7,14 @@
         <img src="public/images/bouteille_mockup.png" alt="Bouteille Draskan" class="animated no-select" data-animation="fadeInRight" data-start-delay="1">
     </div>
     <div id="accueil_2">
-        <h2 class="animated" data-animation="fadeInLeft">Nos Produits :</h2>
+        <h2 class="animated" data-animation="fadeInLeft" data-start-delay="0.6">Nos Produits :</h2>
 
         <div class="carousel-container" id="carouselContainer">
             <div class="carousel" id="carousel">
                 <div class="loading-message">Chargement des produits...</div>
             </div>
 
-            <div class="carousel-nav animated" data-animation="fadeIn" data-reset-delay>
+            <div class="carousel-nav animated" data-animation="fadeIn" data-start-delay="0.6">
                 <button id="prevBtn" aria-label="Produit précédent" disabled>&#10094;</button>
                 <button id="nextBtn" aria-label="Produit suivant" disabled>&#10095;</button>
             </div>
