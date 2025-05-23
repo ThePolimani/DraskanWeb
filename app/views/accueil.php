@@ -7,7 +7,7 @@
         <img src="public/images/bouteille_mockup.png" alt="Bouteille Draskan" class="animated no-select" data-animation="fadeInRight" data-start-delay="1">
     </div>
     <div id="accueil_2">
-        <h2>Nos Produits :</h2>
+        <h2 class="animated" data-animation="fadeInLeft">Nos Produits :</h2>
 
         <div class="carousel-container" id="carouselContainer">
             <div class="carousel" id="carousel">

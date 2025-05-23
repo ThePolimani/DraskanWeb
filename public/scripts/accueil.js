@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function createProductElement(product) {
             const div = document.createElement('div');
             div.classList.add('product');
-            div.classList.add('fadeIn');
+            div.classList.add('fadeInUp');
             div.dataset.id = product.id;
             div.innerHTML = `
                 <h3 class="product-title">${product.nom}</h3>

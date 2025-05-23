@@ -217,45 +217,67 @@ function switchLanguage(lang) {
 
 document.addEventListener("DOMContentLoaded", function() {
     const userLang = navigator.language.startsWith('en') ? 'en' : 'fr';
-    loadLanguage(userLang);
+    loadLanguage(userLang); // Assurez-vous que cette fonction est définie ailleurs si besoin
 
     const panierButton = document.getElementById('panier');
     const panierPopup = document.getElementById('panierPopup');
     const closepanier = document.getElementById('closepanier');
     const panierItems = document.getElementById('panierItems');
-    const panierTotalEl = document.getElementById('panierTotal'); // Renommé pour clarté
+    const panierTotalEl = document.getElementById('panierTotal');
     const checkoutBtn = document.getElementById('checkoutBtn');
-    const addTopanierButtons = document.querySelectorAll('.add-to-panier');
+    // Les boutons .add-to-panier seront gérés dynamiquement après récupération des produits
     const carouselContainer = document.getElementById('carousel');
-    
-    // Charger le panier depuis localStorage
+
     let panier = JSON.parse(localStorage.getItem('panier')) || [];
-    let lastAddedItemId = null; // Pour l'animation du nouvel item
-    let priceAnimationFrameId = null; // Pour l'animation du prix
+    let lastAddedItemId = null;
+    let priceAnimationFrameId = null;
+    let productsWithStock = {}; // Pour stocker les infos des produits, y compris le stock
+
+    // --- NOUVEAU : Fonction pour récupérer les produits et leurs stocks ---
+    async function initializeStore() {
+        try {
+            const response = await fetch('app/api/get_produits.php'); // Chemin vers votre API
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP ! statut: ${response.status}`);
+            }
+            const productsFromServer = await response.json();
+            productsFromServer.forEach(p => {
+                productsWithStock[p.id] = {
+                    stock: p.stock,
+                    name: p.nom,
+                    // Convertir le prix en nombre, enlevant le symbole € et gérant la virgule/point
+                    price: parseFloat(p.prix.replace('€', '').trim().replace(',', '.')),
+                    img: p.img
+                };
+            });
+            updateAllAddToCartButtonsVisuals(); // Mettre à jour l'état initial des boutons d'ajout
+            updatepanierDisplay(); // Rafraîchir l'affichage du panier avec les infos de stock
+        } catch (error) {
+            console.error("Impossible de charger les produits:", error);
+            panierItems.innerHTML = "<p>Erreur lors du chargement des produits. Veuillez réessayer.</p>";
+        }
+    }
 
     // Ouvrir/fermer le panier
     panierButton.addEventListener('click', function(e) {
         e.stopPropagation();
         panierPopup.classList.toggle('open');
         if (panierPopup.classList.contains('open')) {
-            lastAddedItemId = null;
-            updatepanierDisplay();
+            lastAddedItemId = null; // Réinitialiser pour l'animation
+            updatepanierDisplay(); // Mettre à jour l'affichage en ouvrant
         }
     });
-    
+
     closepanier.addEventListener('click', function(e) {
-        e.stopPropagation(); // Empêche l'événement de remonter
+        e.stopPropagation();
         panierPopup.classList.remove('open');
     });
 
-    // Fermer le panier quand on clique en dehors
     document.addEventListener('click', function(e) {
-        // Ne pas fermer si on clique sur un bouton "Ajouter au panier"
-        const isAddToCartButton = e.target.classList.contains('add-to-panier') || 
-                                 e.target.closest('.add-to-panier');
-        
-        if (panierPopup.classList.contains('open') && 
-            !panierPopup.contains(e.target) && 
+        const isAddToCartButton = e.target.classList.contains('add-to-panier') ||
+                                  e.target.closest('.add-to-panier');
+        if (panierPopup.classList.contains('open') &&
+            !panierPopup.contains(e.target) &&
             e.target !== panierButton &&
             !isAddToCartButton) {
             panierPopup.classList.remove('open');
@@ -265,98 +287,117 @@ document.addEventListener("DOMContentLoaded", function() {
     panierPopup.addEventListener('click', function(e) {
         e.stopPropagation();
     });
-    
-    // Ajouter un produit au panier
-    function addTopanier(id, name, price) {
-        const existingItem = panier.find(item => item.id === id);
-        
-        if (existingItem) {
-            existingItem.quantity += 1;
-            lastAddedItemId = null;
-        } else {
-            panier.push({ id, name, price, quantity: 1 });
-            lastAddedItemId = id;
+
+    // --- MODIFIÉ : Ajouter un produit au panier (avec vérification de stock) ---
+    function addTopanier(id) { // Plus besoin de name, price ici, on les prendra de productsWithStock
+        const productInfo = productsWithStock[id];
+        if (!productInfo) {
+            console.error(`Information de stock pour le produit ID ${id} non trouvée.`);
+            alert("Produit non trouvé ou informations manquantes.");
+            return;
         }
-        
-        savepanier();
-        updatepanierDisplay();
-        
-        // Ouvrir le panier sans déclencher la fermeture
-        requestAnimationFrame(() => {
-            panierPopup.classList.add('open');
+
+        const stock = productInfo.stock;
+        const existingItem = panier.find(item => item.id === id);
+        const currentQuantityInCart = existingItem ? existingItem.quantity : 0;
+
+        if (currentQuantityInCart < stock) {
+            if (existingItem) {
+                existingItem.quantity += 1;
+                lastAddedItemId = null;
+            } else {
+                panier.push({
+                    id,
+                    name: productInfo.name,
+                    price: productInfo.price, // Utiliser le prix numérique
+                    quantity: 1,
+                    img: productInfo.img // Assumant que vous voulez stocker l'image aussi
+                });
+                lastAddedItemId = id;
+            }
+            savepanier();
+            updatepanierDisplay();
+
+            if (!panierPopup.classList.contains('open')) {
+                requestAnimationFrame(() => {
+                    panierPopup.classList.add('open');
+                });
+            }
+        } else {
+            alert("Quantité maximale en stock atteinte pour ce produit.");
+            // La mise à jour visuelle du bouton sera gérée par updateAllAddToCartButtonsVisuals et updatepanierDisplay
+        }
+        updateAllAddToCartButtonsVisuals(); // Mettre à jour l'état des boutons après ajout
+    }
+
+    // Gestion des clics sur les boutons "add-to-panier" (par exemple dans un carrousel)
+    if (carouselContainer) {
+        carouselContainer.addEventListener('click', function(event) {
+            if (event.target.classList.contains('add-to-panier')) {
+                const button = event.target;
+                const id = button.getAttribute('data-id');
+
+                if (!productsWithStock[id]) {
+                    console.error("Info produit non chargée pour ID:", id);
+                    alert("Erreur : information produit non disponible.");
+                    return;
+                }
+
+                // Vérifier si le bouton est désactivé (signifiant stock épuisé ou limite atteinte)
+                if (button.disabled) {
+                    // Optionnel : feedback visuel (ex: secouer le bouton, tooltip)
+                    return;
+                }
+
+                button.classList.add('added');
+                setTimeout(() => {
+                    button.classList.remove('added');
+                }, 500);
+
+                addTopanier(id); // Appeler avec l'ID seulement
+            }
         });
     }
 
-    if (carouselContainer) {
-        carouselContainer.addEventListener('click', function(event) {
-        // Vérifie si l'élément cliqué (event.target) a la classe "add-to-panier"
-        if (event.target.classList.contains('add-to-panier')) {
-            const button = event.target;
-            const id = button.getAttribute('data-id');
-            const name = button.getAttribute('data-name');
-            const price = parseFloat(button.getAttribute('data-price'));
-            
-            button.classList.add('added');
-            setTimeout(() => {
-                button.classList.remove('added');
-            }, 500);
-            
-            addTopanier(id, name, price);
-          
-        }
-      });
-    }
-    
-    // Passer la commande
     checkoutBtn.addEventListener('click', function() {
         if (panier.length > 0) {
-            window.location.href = '/paiement';
-            savepanier();
-            updatepanierDisplay();
+            window.location.href = '/paiement'; // Assurez-vous que cette route est correcte
+            // Le panier est sauvegardé à chaque modification, pas besoin ici spécifiquement
         }
     });
-    
-    // Fonction pour ajouter un article au panier
-    function addTopanier(id, name, price) {
-        const existingItem = panier.find(item => item.id === id);
-        
-        if (existingItem) {
-            existingItem.quantity += 1;
-            lastAddedItemId = null; // Ce n'est pas un nouvel item dans la liste
-        } else {
-            panier.push({ id, name, price, quantity: 1 });
-            lastAddedItemId = id; // Marquer cet item comme nouveau pour l'animation
-        }
-        
-        savepanier();
-        updatepanierDisplay();
-        
-        // Afficher le panier quand on ajoute un produit, s'il n'est pas déjà ouvert
-        if (!panierPopup.classList.contains('open')) {
-           panierPopup.classList.add('open');
-        }
-    }
-    
-    // Fonction pour sauvegarder le panier dans localStorage
+
     function savepanier() {
         localStorage.setItem('panier', JSON.stringify(panier));
         updatePanierCount();
     }
-    
-    // Fonction pour mettre à jour l'affichage du panier
+
+    // --- MODIFIÉ : Mettre à jour l'affichage du panier (avec gestion des stocks pour les boutons +) ---
     function updatepanierDisplay() {
+        if (Object.keys(productsWithStock).length === 0 && panier.length > 0) {
+             // Si les produits ne sont pas encore chargés mais qu'il y a un panier sauvegardé,
+             // il vaut mieux attendre initializeStore ou afficher un message.
+             // Pour l'instant, on laisse la logique continuer, mais c'est un point d'attention.
+        }
+
         if (panier.length === 0) {
             panierItems.innerHTML = '<p>Votre panier est vide</p>';
             updateTotalPriceAnimated(0);
-            lastAddedItemId = null; 
-            updatePanierCount(); // Assurer que le compteur est à jour
+            lastAddedItemId = null;
+            updatePanierCount();
+            updateCheckoutButton();
+            updateAllAddToCartButtonsVisuals(); // Mettre à jour les boutons de la page principale
             return;
         }
 
         updateCheckoutButton();
-        
-        panierItems.innerHTML = ''; // Vider les items actuels
-        panier.forEach(item => { // Pas besoin de l'index ici pour l'animation
+        panierItems.innerHTML = '';
+        panier.forEach(item => {
+            const productInfo = productsWithStock[item.id];
+            const stock = productInfo ? productInfo.stock : 0; // Stock disponible pour cet item
+            // S'assurer que le prix de l'item dans le panier est bien un nombre
+            const itemPrice = typeof item.price === 'string' ? parseFloat(item.price.replace('€', '').trim().replace(',', '.')) : item.price;
+
+
             const itemElement = document.createElement('div');
             itemElement.className = 'panier-item';
             if (item.id === lastAddedItemId) {
@@ -365,79 +406,90 @@ document.addEventListener("DOMContentLoaded", function() {
                     itemElement.classList.remove('new-item-animation');
                 }, { once: true });
             }
+
+            const plusButtonDisabled = item.quantity >= stock ? 'disabled' : '';
+            // Ajout d'une classe pour styler spécifiquement le bouton désactivé à cause du stock
+            const plusButtonClass = item.quantity >= stock ? 'quantity-btn plus disabled-stock' : 'quantity-btn plus';
+
             itemElement.innerHTML = `
                 <div class="item-info">
                     <h4>${item.name}</h4>
-                    <p>${item.price.toFixed(2)}€</p>
+                    <p>${itemPrice.toFixed(2)}€</p>
                 </div>
                 <div class="item-actions">
                     <button class="quantity-btn minus" data-id="${item.id}">-</button>
                     <span class="item-quantity">${item.quantity}</span>
-                    <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                    <button class="${plusButtonClass}" data-id="${item.id}" ${plusButtonDisabled}>+</button>
                     <button class="remove-item" data-id="${item.id}">Supprimer</button>
                 </div>
             `;
             panierItems.appendChild(itemElement);
         });
-        
-        // Réinitialiser après le rendu, pour que la prochaine mise à jour ne ré-anime pas
+
         if (lastAddedItemId) {
             lastAddedItemId = null;
         }
-        // Ajouter les événements pour les nouveaux boutons
         attachItemEventListeners();
-        
         updateTotalPriceAnimated(getpanierTotal());
         updatePanierCount();
+        updateAllAddToCartButtonsVisuals(); // Mettre à jour les boutons de la page principale
     }
+
     function attachItemEventListeners() {
         document.querySelectorAll('.quantity-btn.minus').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = button.getAttribute('data-id');
+            button.onclick = function() { // Remplacer addEventListener par onclick pour éviter doublons
+                const id = this.getAttribute('data-id');
                 decreaseQuantity(id);
-            });
+            };
         });
-        
+
         document.querySelectorAll('.quantity-btn.plus').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = button.getAttribute('data-id');
+            button.onclick = function() { // Idem
+                if (this.disabled) return; // Ne rien faire si le bouton est désactivé
+                const id = this.getAttribute('data-id');
                 increaseQuantity(id);
-            });
+            };
         });
-        
+
         document.querySelectorAll('.remove-item').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = button.getAttribute('data-id');
+            button.onclick = function() { // Idem
+                const id = this.getAttribute('data-id');
                 removeFrompanier(id);
-                updateCheckoutButton();
-            });
+                // updateCheckoutButton(); // Déjà appelé dans updatepanierDisplay
+            };
         });
     }
-    
-    // Fonction pour animer la mise à jour du prix total
+
     function updateTotalPriceAnimated(newTotalValue) {
-        const currentTotalText = panierTotalEl.textContent.replace('€', '').trim();
+        const currentTotalText = panierTotalEl.textContent.replace('€', '').trim().replace(',', '.');
         let currentTotal = parseFloat(currentTotalText) || 0;
         const targetTotal = parseFloat(newTotalValue);
-        if (Math.abs(currentTotal - targetTotal) < 0.01) { // Si la différence est négligeable
+
+        if (isNaN(currentTotal)) currentTotal = 0; // S'assurer que currentTotal est un nombre
+        if (isNaN(targetTotal)) { // Si newTotalValue n'est pas un nombre, ne pas animer.
+             panierTotalEl.textContent = "0.00"; // ou une valeur par défaut
+             return;
+        }
+
+        if (Math.abs(currentTotal - targetTotal) < 0.01) {
             panierTotalEl.textContent = targetTotal.toFixed(2);
             return;
         }
         if (priceAnimationFrameId) {
             cancelAnimationFrame(priceAnimationFrameId);
         }
-        const duration = 300; // ms
+        const duration = 300;
         const startTime = performance.now();
+
         function animate(currentTime) {
             const elapsedTime = currentTime - startTime;
             const progress = Math.min(elapsedTime / duration, 1);
-            
             const animatedValue = currentTotal + (targetTotal - currentTotal) * progress;
             panierTotalEl.textContent = animatedValue.toFixed(2);
             if (progress < 1) {
                 priceAnimationFrameId = requestAnimationFrame(animate);
             } else {
-                panierTotalEl.textContent = targetTotal.toFixed(2); // Assurer la valeur finale exacte
+                panierTotalEl.textContent = targetTotal.toFixed(2);
                 priceAnimationFrameId = null;
             }
         }
@@ -445,61 +497,66 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function updateCheckoutButton() {
-        if (panier.length > 0) {
-            checkoutBtn.disabled = false;
-        } else {
-            checkoutBtn.disabled = true;
-        }
+        checkoutBtn.disabled = panier.length === 0;
     }
-    
-    // Fonctions pour modifier la quantité
+
+    // --- MODIFIÉ : Augmenter la quantité (avec vérification de stock) ---
     function increaseQuantity(id) {
         const item = panier.find(item => item.id === id);
-        if (item) {
-            item.quantity += 1;
-            savepanier();
-            lastAddedItemId = null; // Pas un nouvel ajout, donc pas d'animation d'item
-            updatepanierDisplay();
+        const productInfo = productsWithStock[id];
+
+        if (item && productInfo) {
+            const stock = productInfo.stock;
+            if (item.quantity < stock) {
+                item.quantity += 1;
+                savepanier();
+                lastAddedItemId = null;
+                updatepanierDisplay();
+            } else {
+                alert("Quantité maximale en stock atteinte pour ce produit.");
+                // Le bouton + sera désactivé par updatepanierDisplay
+            }
         }
     }
-    
+
     function decreaseQuantity(id) {
         const item = panier.find(item => item.id === id);
         if (item) {
-            if (item.quantity > 1) { // Ne décrémenter que si > 1
+            if (item.quantity > 1) {
                 item.quantity -= 1;
-                savepanier();
-                lastAddedItemId = null; // Pas un nouvel ajout
-                updatepanierDisplay();
+            } else {
+                // Si la quantité est 1, décrémenter revient à supprimer l'article
+                // Ou vous pouvez choisir de ne rien faire et laisser l'utilisateur utiliser "Supprimer"
+                panier = panier.filter(cartItem => cartItem.id !== id);
             }
-            // Si la quantité est 1, ne rien faire (on ne supprime plus ici)
+            savepanier();
+            lastAddedItemId = null;
+            updatepanierDisplay(); // Rafraîchit et réactive le bouton + si nécessaire
         }
     }
-    
+
     function removeFrompanier(id) {
         panier = panier.filter(item => item.id !== id);
         savepanier();
-        lastAddedItemId = null; // Pas un nouvel ajout
-        updatepanierDisplay();
+        lastAddedItemId = null;
+        updatepanierDisplay(); // Rafraîchit et met à jour l'état des boutons
     }
-    
-    // Calculer le total du panier
+
     function getpanierTotal() {
-        return panier.reduce((total, item) => total + (item.price * item.quantity), 0);
+        return panier.reduce((total, item) => {
+            // S'assurer que item.price est un nombre pour le calcul
+            const price = typeof item.price === 'string' ? parseFloat(item.price.replace('€', '').trim().replace(',', '.')) : item.price;
+            return total + (price * item.quantity);
+        }, 0);
     }
-    
-    // Mettre à jour le compteur du panier
+
     function updatePanierCount() {
         const count = panier.reduce((total, item) => total + item.quantity, 0);
-
         if (panierButton) {
             const panierImg = panierButton.querySelector('img');
-        
             if (panierImg) {
                 let imageNumber = count > 9 ? '9plus' : count;
-                panierImg.src = `public/images/panier/panier-${imageNumber}.png`;
-
-                // Animation (facultative)
+                panierImg.src = `public/images/panier/panier-${imageNumber}.png`; // Adaptez le chemin si nécessaire
                 panierImg.classList.add('panier-pulse');
                 setTimeout(() => {
                     panierImg.classList.remove('panier-pulse');
@@ -507,8 +564,33 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     }
-    
-    // Initialiser l'affichage au chargement
-    updatePanierCount();
-    updateCheckoutButton();
+
+    // --- NOUVEAU : Mettre à jour l'état visuel de TOUS les boutons "Ajouter au panier" sur la page ---
+    function updateAllAddToCartButtonsVisuals() {
+        const allPageButtons = document.querySelectorAll('.add-to-panier');
+        allPageButtons.forEach(button => {
+            const id = button.getAttribute('data-id');
+            const productInfo = productsWithStock[id];
+
+            if (productInfo) {
+                const stock = productInfo.stock;
+                const itemInCart = panier.find(item => item.id === id);
+                const quantityInCart = itemInCart ? itemInCart.quantity : 0;
+
+                if (quantityInCart >= stock || stock === 0) {
+                    button.disabled = true;
+                    button.style.backgroundColor = 'grey'; // Couleur de fond pour indiquer l'indisponibilité
+                    button.textContent = stock === 0 ? 'Stock épuisé' : 'Stock max atteint';
+                } else {
+                    button.disabled = false;
+                    button.style.backgroundColor = ''; // Réinitialiser la couleur de fond
+                    button.textContent = 'Ajouter au panier'; // Texte original du bouton
+                }
+            }
+        });
+    }
+
+    // Initialisation du magasin (chargement des produits et mise à jour de l'UI)
+    initializeStore();
+    // Les appels initiaux à updatePanierCount et updateCheckoutButton sont maintenant gérés dans initializeStore -> updatepanierDisplay
 });

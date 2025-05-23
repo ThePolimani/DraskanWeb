@@ -294,6 +294,7 @@ button {
     cursor: pointer;
     border-radius: 3px;
     transition: background 0.2s;
+    font-size: 20px;
 }
 
 .quantity-btn:hover {
@@ -334,6 +335,23 @@ button {
 
 .total-price {
     display: inline-block;
+}
+
+
+.add-to-panier:disabled,
+.add-to-panier.disabled-stock {
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed !important;
+    opacity: 0.7 !important;
+}
+
+.panier-item .item-actions .quantity-btn.plus:disabled,
+.panier-item .item-actions .quantity-btn.plus.disabled-stock {
+    background-color: #e0e0e0 !important;
+    color: #757575 !important;
+    cursor: not-allowed !important;
+    border-color: #d0d0d0 !important;
 }
 
 /* Animation .pulse retirée pour le prix total */
