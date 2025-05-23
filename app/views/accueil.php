@@ -14,7 +14,7 @@
                 <div class="loading-message">Chargement des produits...</div>
             </div>
 
-            <div class="carousel-nav">
+            <div class="carousel-nav animated" data-animation="fadeIn" data-reset-delay>
                 <button id="prevBtn" aria-label="Produit précédent" disabled>&#10094;</button>
                 <button id="nextBtn" aria-label="Produit suivant" disabled>&#10095;</button>
             </div>

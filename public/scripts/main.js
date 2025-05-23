@@ -223,7 +223,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const panierPopup = document.getElementById('panierPopup');
     const closepanier = document.getElementById('closepanier');
     const panierItems = document.getElementById('panierItems');
-    const panierCount = document.getElementById('panierCount');
     const panierTotalEl = document.getElementById('panierTotal'); // Renommé pour clarté
     const checkoutBtn = document.getElementById('checkoutBtn');
     const addTopanierButtons = document.querySelectorAll('.add-to-panier');

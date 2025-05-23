@@ -4,9 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
-        // Supprimer la variable productData codée en dur
-        // let productData = [ ... ]; 
-
         let productsOriginal = [];
         let productWidth = 0; 
         
@@ -14,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let clonesToAppend = [];
 
         let currentXOffset = 0;
-        const autoScrollSpeed = 0.5; 
+        const autoScrollSpeed = 0.25; 
         let isHovering = false;
         let isTransitioningCard = false;
         let animationFrameId;
@@ -22,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
         function createProductElement(product) {
             const div = document.createElement('div');
             div.classList.add('product');
-            div.dataset.id = product.id; // Assurez-vous que l'API renvoie 'id'
+            div.classList.add('fadeIn');
+            div.dataset.id = product.id;
             div.innerHTML = `
                 <h3 class="product-title">${product.nom}</h3>
                 <img src="${product.img}" alt="${product.nom}" class="product-image">
@@ -88,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function autoScrollLoop() {
-            // ... (identique à la version précédente)
             if (isHovering || isTransitioningCard || productsOriginal.length === 0 || productWidth === 0) {
                 if (!isTransitioningCard) animationFrameId = requestAnimationFrame(autoScrollLoop);
                 return;
@@ -108,18 +105,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function startAutoScroll() {
-            // ... (identique)
             if (animationFrameId) cancelAnimationFrame(animationFrameId); 
             autoScrollLoop();
         }
 
         function stopAutoScroll() {
-            // ... (identique)
             cancelAnimationFrame(animationFrameId);
         }
 
         function moveOneCard(direction) { 
-            // ... (identique à la version précédente avec le setTimeout de 50ms)
             if (isTransitioningCard || productsOriginal.length === 0 || productWidth === 0) return;
             isTransitioningCard = true;
             stopAutoScroll();
@@ -166,13 +160,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         carouselContainer.addEventListener('mouseenter', () => {
-            // ... (identique)
             isHovering = true;
             stopAutoScroll();
         });
 
         carouselContainer.addEventListener('mouseleave', () => {
-            // ... (identique)
             isHovering = false;
             if (!isTransitioningCard) {
                 startAutoScroll();
@@ -185,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
         async function fetchProductsAndInit() {
             displayMessage("Chargement des produits...");
             try {
-                const response = await fetch('app/api/get_produits.php'); // Ajustez le chemin si nécessaire
+                const response = await fetch('app/api/get_produits.php');
                 if (!response.ok) {
                     // Essayer de lire le message d'erreur JSON du corps de la réponse
                     let errorData;

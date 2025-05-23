@@ -1,5 +1,5 @@
 <?php
-require_once 'app/config.php';
+require_once '../config.php';
 
 // Récupération des paramètres envoyés en GET
 $mot_cle = isset($_GET['q']) ? trim($_GET['q']) : "";
