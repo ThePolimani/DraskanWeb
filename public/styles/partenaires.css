@@ -7,24 +7,16 @@
 body {
   
     background-size: cover;
-    font-family: 'Lancelot', sans-serif;
-    text-align: center;
+    
     background-image: url('../images/fondpartenaires.jpg');
 
 }
 
-
-header {
-  background-color: #000;
-  color: rgb(255, 255, 255);
-  padding: 2rem 1rem;
+main {
+  text-align: center;
+  font-family: 'Lancelot', sans-serif;
 }
 
-
-
-header h1 {
-  font-size: 2.5rem;
-}
 
 .partners {
   display: flex;
@@ -64,11 +56,4 @@ header h1 {
   max-height: 200px;
   object-fit: contain;
   margin-bottom: 1rem;
-}
-
-footer {
-  background-color: #000;
-  color: rgb(228, 228, 228);
-  padding: 1rem;
-  margin-top: 2rem;
 }
