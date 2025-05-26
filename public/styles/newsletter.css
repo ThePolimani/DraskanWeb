@@ -1,0 +1,30 @@
+h1 {
+    font-family: lancelot-regular, sans-serif;
+    font-size: 100px;
+}
+
+input {
+    border: black 2px solid;
+    padding: 10px;
+    border-radius: 25px;
+    width: 500px;
+    margin: auto;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    background-image: url(/public/images/ocean_newsletter.png);
+    background-size: cover;
+}
+
+div {
+    text-align: center;
+}
+
+#reverse {
+    transform: scaleX(-1);
+}
+
