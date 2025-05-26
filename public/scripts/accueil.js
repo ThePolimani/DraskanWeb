@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <h3 class="product-title">${product.nom}</h3>
             <img src="${product.img}" alt="${product.nom}" class="product-image">
             <p class="product-price">${product.prix}</p>
-            <button class="add-to-panier btn" data-id="${product.id}" data-name="${product.nom}" data-price="${product.prix}">Ajouté au panier</button>
+            <button class="add-to-panier btn" data-id="${product.id}" data-name="${product.nom}" data-price="${product.prix}">Ajouter au panier</button>
         `;
         return div;
     }

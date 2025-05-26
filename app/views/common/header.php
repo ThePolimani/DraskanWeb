@@ -59,17 +59,23 @@
 
     <header class="animatedList" data-animation="fadeIn" data-reset-delay data-leaf-only>
         <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
-        <nav>
-            <a href="produits" id="link_produits">Produits</a>
-            <a href="partenaires" id="link_partenaires">Partenaires</a>
-            <a href="contact" id="link_contact">Nous Contactez</a>
-        </nav>
-        <div id="tools">
-            <input type="text" id="search" placeholder="Rechercher...">
-            <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
-            <a href="newsletter"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
-            <button id="panier"><img src="public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
+        <button id="mobile-menu-button" class="mobile-only">
+            <img src="public/images/menu-icon.svg" alt="Menu" id="menu-icon">
+        </button>
+        <div id="header-content">
+            <nav>
+                <a href="produits" id="link_produits">Produits</a>
+                <a href="partenaires" id="link_partenaires">Partenaires</a>
+                <a href="contact" id="link_contact">Nous Contactez</a>
+            </nav>
         </div>
+            <div id="tools">
+                <input type="text" id="search" placeholder="Rechercher...">
+                <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
+                <a href="newsletter"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
+                <button id="panier"><img src="public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
+            </div>
+        
     </header>
     <div class="panier-popup" id="panierPopup">
         <div class="panier-header">

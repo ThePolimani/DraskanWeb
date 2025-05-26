@@ -268,6 +268,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    const menuButton = document.getElementById('mobile-menu-button');
+    const menuIcon = document.getElementById('menu-icon');
+    const headerContent = document.getElementById('header-content');
+    
+    menuButton.addEventListener('click', function() {
+        headerContent.classList.toggle('active');
+        menuIcon.classList.toggle('active');
+    });
+    
+    // Fermer le menu quand on clique sur un lien (optionnel)
+    const navLinks = document.querySelectorAll('header nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            headerContent.classList.remove('active');
+            menuIcon.classList.remove('active');
+        });
+    });
+
     closepanier.addEventListener('click', function(e) {
         e.stopPropagation();
         panierPopup.classList.remove('open');
