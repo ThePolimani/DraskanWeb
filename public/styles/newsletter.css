@@ -16,7 +16,7 @@ main {
     align-items: center;
     flex-direction: row;
     justify-content: center;
-    background-image: url(/public/images/ocean_newsletter.png);
+    background-image: url(../images/ocean_newsletter.png);
     background-size: cover;
 }
 
