@@ -16,6 +16,22 @@ main {
     background-position: center;
 }
 
+#accueil_1 p {
+    background-color: #69362D;
+    padding: 17px;
+    width: fit-content;
+    border: 2px solid #69362D;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+#accueil_1 p:hover {
+    background-color: #69362dd4;
+    cursor: pointer;
+    transform: scale(1.05);
+    border-color: #e3e3e3;
+}
+
 #accueil_2, #accueil_3 {
     background-color: #000;
     width: 100%;
@@ -23,10 +39,20 @@ main {
     margin: 10px 0;
 }
 
+#accueil_2 h2 {
+    margin:  40px 0 25px;
+    text-align: center;
+}
+
 #accueil_3 div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+#accueil_3 {
+    max-width: 1400px;
+    margin-top: 130px;
 }
 
 #accueil_3 h2 {
@@ -49,7 +75,207 @@ h1 {
     font-weight: normal;
 }
 
+#accueil_4 {
+    width: 100%;
+    text-align: center;
+    margin: 100px 0 80px;
+}
+
+#accueil_4 h2 {
+    margin-bottom: 30px;
+}
+
+.partner-logo {
+    width: 200px;
+    height: auto;
+    margin: 20px;
+    border-radius: 20px;
+}
+
+.partners {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    padding: 0 15vw;
+}
+
+.ligne {
+    width: 40%;
+    height: 2px;
+    background-color: #69362D;
+}
+
+
+/*Carrousel */
+
+.carousel-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 1rem 0; 
+        }
+
+        .carousel-container::before,
+        .carousel-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none; 
+        }
+
+        .carousel-container::before {
+            left: 0;
+            background: linear-gradient(to right, #000000 20%, transparent);
+        }
+
+        .carousel-container::after {
+            right: 0;
+            background: linear-gradient(to left, #000000 20%, transparent);
+        }
+
+        .carousel {
+            display: flex;
+        }
+
+        .product {
+            min-width: 260px;
+            margin: 0 15px;
+            background: linear-gradient(#69362D, #69362d6f);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 1.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+            will-change: transform;
+        }
+
+        .product:hover {
+            transform: scale(1.02);
+        }
+
+        .product-image {
+            max-width: 290px;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+            background-color: #f1f1f112;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1rem;
+            background-color: #e6cfad;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn:hover {
+            background-color: #af9d81;
+            transform: scale(1.05);
+        }
+        .btn:active {
+            transform: scale(1);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: calc(100% - 100px); 
+            left: 50px; 
+            right: 50px;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none; 
+            z-index: 10;
+        }
+
+        .carousel-nav button {
+            pointer-events: all;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ddd;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .carousel-nav button:hover {
+            background: white;
+            transform: scale(1.1); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .carousel-nav button:active {
+            transform: scale(1.05);
+        }
+        .loading-message, .error-message { /* Styles pour les messages de chargement/erreur */
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 2rem;
+            color: #555;
+            margin-left: 10vw;
+        }
+
 @media screen and (max-width: 1110px) {
-    
-    
+    #accueil_3 img {
+        height: 35vw;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    #accueil_3 div {
+        flex-direction: column;
+        align-items: center;
+    }
+    #accueil_3 img {
+        height: 45vw;
+        width: fit-content;
+    }
+    #accueil_1{
+        flex-direction: column;
+    }
 }

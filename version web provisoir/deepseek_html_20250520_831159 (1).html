@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrousel de Produits Dynamique</title>
+    <style>
+        /* ... Votre CSS reste identique à la version précédente ... */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            background-color: #eef1f5;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .carousel-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 1rem 0; 
+        }
+
+        .carousel-container::before,
+        .carousel-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none; 
+        }
+
+        .carousel-container::before {
+            left: 0;
+            background: linear-gradient(to right, #eef1f5 20%, transparent);
+        }
+
+        .carousel-container::after {
+            right: 0;
+            background: linear-gradient(to left, #eef1f5 20%, transparent);
+        }
+
+        .carousel {
+            display: flex;
+        }
+
+        .product {
+            min-width: 350px;
+            margin: 0 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.35s ease-out, box-shadow 0.35s ease-out;
+            flex-shrink: 0;
+        }
+
+        .product:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 280px;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 1.2rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #34495e;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1.2rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: calc(100% - 100px); 
+            left: 50px; 
+            right: 50px;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none; 
+            z-index: 10;
+        }
+
+        .carousel-nav button {
+            pointer-events: all;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ddd;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .carousel-nav button:hover {
+            background: white;
+            transform: scale(1.1); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .carousel-nav button:active {
+            transform: scale(1.05);
+        }
+        .loading-message, .error-message { /* Styles pour les messages de chargement/erreur */
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 2rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="carousel-title">Nos Produits Phares</h1>
+    
+    <div class="carousel-container" id="carouselContainer">
+        <div class="carousel" id="carousel">
+            <div class="loading-message">Chargement des produits...</div>
+        </div>
+        
+        <div class="carousel-nav">
+            <button id="prevBtn" aria-label="Produit précédent" disabled>&#10094;</button>
+            <button id="nextBtn" aria-label="Produit suivant" disabled>&#10095;</button>
+        </div>
+    </div>
+
+    <script>
+        const carouselContainer = document.getElementById('carouselContainer');
+        const carousel = document.getElementById('carousel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // Supprimer la variable productData codée en dur
+        // let productData = [ ... ]; 
+
+        let productsOriginal = [];
+        let productWidth = 0; 
+        
+        let clonesToPrepend = [];
+        let clonesToAppend = [];
+
+        let currentXOffset = 0;
+        const autoScrollSpeed = 0.5; 
+        let isHovering = false;
+        let isTransitioningCard = false;
+        let animationFrameId;
+
+        function createProductElement(product) {
+            const div = document.createElement('div');
+            div.classList.add('product');
+            div.dataset.id = product.id; // Assurez-vous que l'API renvoie 'id'
+            div.innerHTML = `
+                <img src="${product.img}" alt="${product.name}" class="product-image">
+                <h3 class="product-title">${product.name}</h3>
+                <p class="product-price">${product.prix}</p>
+                <button class="btn">Voir détails</button>
+            `;
+            return div;
+        }
+
+        function displayMessage(message, type = 'loading') {
+            carousel.innerHTML = `<div class="${type}-message">${message}</div>`;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+        }
+
+        function setupCarousel(fetchedProductData) { // Prend les données récupérées en argument
+            carousel.innerHTML = ''; 
+            productsOriginal = fetchedProductData.map(createProductElement);
+            
+            if (productsOriginal.length === 0) {
+                displayMessage("Aucun produit à afficher.", "error");
+                return;
+            }
+
+            productsOriginal.forEach(p => carousel.appendChild(p));
+
+            const firstProduct = carousel.querySelector('.product');
+            if (!firstProduct) { // Ne devrait pas arriver si productsOriginal.length > 0
+                displayMessage("Erreur lors de la création des éléments du carrousel.", "error");
+                return;
+            }
+
+            const style = getComputedStyle(firstProduct);
+            productWidth = firstProduct.offsetWidth + parseInt(style.marginLeft) + parseInt(style.marginRight);
+
+            if (productWidth === 0) {
+                console.warn("Product width is 0, carousel might not work correctly. Recalculating...");
+                 // Essayer de forcer un reflow pour obtenir la largeur
+                void carousel.offsetWidth;
+                productWidth = firstProduct.offsetWidth + parseInt(style.marginLeft) + parseInt(style.marginRight);
+                if(productWidth === 0) {
+                    displayMessage("Impossible de calculer la largeur des produits.", "error");
+                    return;
+                }
+            }
+
+            const containerWidth = carouselContainer.offsetWidth;
+            const visibleProducts = Math.max(1, Math.floor(containerWidth / productWidth));
+            const numClones = Math.max(productsOriginal.length, visibleProducts + 3); 
+
+            clonesToAppend = productsOriginal.slice(0, numClones).map(p => p.cloneNode(true));
+            clonesToPrepend = productsOriginal.slice(-numClones).map(p => p.cloneNode(true));
+
+            clonesToPrepend.forEach(clone => carousel.insertBefore(clone, carousel.firstChild));
+            clonesToAppend.forEach(clone => carousel.appendChild(clone));
+            
+            currentXOffset = -(clonesToPrepend.length * productWidth);
+            carousel.style.transform = `translateX(${currentXOffset}px)`;
+            carousel.style.transition = 'none'; 
+
+            prevBtn.disabled = false;
+            nextBtn.disabled = false;
+        }
+
+        function autoScrollLoop() {
+            // ... (identique à la version précédente)
+            if (isHovering || isTransitioningCard || productsOriginal.length === 0 || productWidth === 0) {
+                if (!isTransitioningCard) animationFrameId = requestAnimationFrame(autoScrollLoop);
+                return;
+            }
+            currentXOffset -= autoScrollSpeed;
+            const totalWidthOfOriginals = productsOriginal.length * productWidth;
+            const startOffsetPrependClones = -(clonesToPrepend.length * productWidth);
+            if (currentXOffset <= startOffsetPrependClones - totalWidthOfOriginals) {
+                currentXOffset += totalWidthOfOriginals;
+            }
+            else if (currentXOffset >= startOffsetPrependClones) {
+                 currentXOffset -= totalWidthOfOriginals;
+            }
+            carousel.style.transform = `translateX(${currentXOffset}px)`;
+            carousel.style.transition = 'none'; 
+            animationFrameId = requestAnimationFrame(autoScrollLoop);
+        }
+
+        function startAutoScroll() {
+            // ... (identique)
+            if (animationFrameId) cancelAnimationFrame(animationFrameId); 
+            autoScrollLoop();
+        }
+
+        function stopAutoScroll() {
+            // ... (identique)
+            cancelAnimationFrame(animationFrameId);
+        }
+
+        function moveOneCard(direction) { 
+            // ... (identique à la version précédente avec le setTimeout de 50ms)
+            if (isTransitioningCard || productsOriginal.length === 0 || productWidth === 0) return;
+            isTransitioningCard = true;
+            stopAutoScroll();
+            const targetX = currentXOffset - (direction * productWidth);
+            carousel.style.transition = 'transform 0.5s ease-in-out';
+            carousel.style.transform = `translateX(${targetX}px)`;
+            const onTransitionEnd = () => {
+                carousel.removeEventListener('transitionend', onTransitionEnd);
+                const finalTransformStyle = window.getComputedStyle(carousel).transform;
+                let newCurrentX = targetX; 
+                if (finalTransformStyle && finalTransformStyle !== 'none') {
+                    const matrix = new DOMMatrixReadOnly(finalTransformStyle);
+                    newCurrentX = matrix.e; 
+                }
+                currentXOffset = newCurrentX;
+                const totalWidthOfOriginals = productsOriginal.length * productWidth;
+                const startOffsetPrependClones = -(clonesToPrepend.length * productWidth);
+                let didWrap = false;
+                if (direction === 1) { 
+                    if (currentXOffset <= startOffsetPrependClones - totalWidthOfOriginals) {
+                        currentXOffset += totalWidthOfOriginals;
+                        didWrap = true;
+                    }
+                } else { 
+                     if (currentXOffset >= startOffsetPrependClones) {
+                        currentXOffset -= totalWidthOfOriginals;
+                        didWrap = true;
+                    }
+                }
+                if (didWrap) {
+                    carousel.style.transition = 'none'; 
+                    carousel.style.transform = `translateX(${currentXOffset}px)`;
+                }
+                isTransitioningCard = false;
+                if (!isHovering) {
+                    setTimeout(() => {
+                        if (!isHovering && !isTransitioningCard) { 
+                            startAutoScroll();
+                        }
+                    }, 50); 
+                }
+            };
+            carousel.addEventListener('transitionend', onTransitionEnd);
+        }
+
+        carouselContainer.addEventListener('mouseenter', () => {
+            // ... (identique)
+            isHovering = true;
+            stopAutoScroll();
+        });
+
+        carouselContainer.addEventListener('mouseleave', () => {
+            // ... (identique)
+            isHovering = false;
+            if (!isTransitioningCard) {
+                startAutoScroll();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => moveOneCard(1));
+        prevBtn.addEventListener('click', () => moveOneCard(-1));
+        
+        async function fetchProductsAndInit() {
+            displayMessage("Chargement des produits...");
+            try {
+                const response = await fetch('app/api/get_produits.php'); // Ajustez le chemin si nécessaire
+                if (!response.ok) {
+                    // Essayer de lire le message d'erreur JSON du corps de la réponse
+                    let errorData;
+                    try {
+                        errorData = await response.json();
+                    } catch (e) {
+                        // Si le corps n'est pas JSON ou est vide
+                        errorData = { error: `Erreur HTTP ${response.status} - ${response.statusText}` };
+                    }
+                    throw new Error(errorData.error || `Erreur HTTP ${response.status}`);
+                }
+                const fetchedProductData = await response.json();
+                
+                if (fetchedProductData && fetchedProductData.length > 0) {
+                    setupCarousel(fetchedProductData); // Passer les données à setupCarousel
+                    if (productsOriginal.length > 0 && productWidth > 0) {
+                         startAutoScroll();
+                    }
+                } else if (fetchedProductData && fetchedProductData.length === 0) {
+                    displayMessage("Aucun produit trouvé.", "error");
+                } else { // Cas où la réponse est ok mais le JSON est malformé ou non un tableau
+                     displayMessage("Données des produits invalides reçues du serveur.", "error");
+                }
+
+            } catch (error) {
+                console.error("Erreur lors de la récupération des produits:", error);
+                displayMessage(`Erreur lors du chargement: ${error.message}`, "error");
+            }
+        }
+        
+        window.addEventListener('load', fetchProductsAndInit);
+        window.addEventListener('resize', () => {
+            // Gérer le redimensionnement : pourrait simplement rappeler fetchProductsAndInit
+            // ou une version plus optimisée qui ne refait pas le fetch si les données sont déjà là.
+            // Pour la simplicité, on arrête l'animation et on réinitialise avec les données existantes si possible,
+            // ou on refait tout si productWidth devient invalide.
+            stopAutoScroll();
+            if (productsOriginal.length > 0) {
+                setupCarousel(productsOriginal.map(el => { // Recréer les données sources à partir des éléments DOM n'est pas idéal
+                                                            // Il vaut mieux stocker les données brutes récupérées une fois.
+                                                            // Simplification : on assume que les données sont toujours là ou on les re-fetch.
+                                                            // Pour une meilleure robustesse, stocker les données JSON initiales.
+                    return { // Ceci est une tentative de recréer les données. Mieux vaut stocker le fetchedProductData
+                        id: el.dataset.id,
+                        name: el.querySelector('.product-title').textContent,
+                        prix: el.querySelector('.product-price').textContent,
+                        img: el.querySelector('.product-image').src
+                    };
+                }));
+                if (productsOriginal.length > 0 && productWidth > 0) {
+                    startAutoScroll();
+                }
+            } else {
+                fetchProductsAndInit(); // Si pas de produits, refaire le fetch
+            }
+        });
+
+    </script>
+</body>
+</html>

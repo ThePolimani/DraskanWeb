@@ -18,11 +18,14 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lancelot&display=swap" rel="stylesheet">
     <script src="public/scripts/verifage.js"></script>
     <script src="public/scripts/main.js"></script>
-	<link rel="apple-touch-icon" href="/app-icon.png">
+    <?php if (!empty($pageSpecificJS)): ?>
+        <script src="public/scripts/<?= $pageSpecificJS ?>"></script>
+    <?php endif; ?>
+	<!--<link rel="apple-touch-icon" href="/app-icon.png">-->
 </head>
 <body>
     <div id="ageVerificationModal">
-        <div id="ageVerificationContent">
+        <div id="ageVerificationContent" class="animatedList" data-animation="fadeIn" data-delay-step="0.05">
             <h2>Vérification d'âge</h2>
             <p>Pour accéder à notre site, veuillez confirmer votre âge:</p>
             
@@ -54,17 +57,39 @@
         </div>
     </div>
 
-    <header class="animatedList" data-animation="fadeIn" data-delay-step="0.2">
+    <header class="animatedList" data-animation="fadeIn" data-reset-delay data-leaf-only>
         <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
-        <nav>
-            <a href="produits.html" id="link_produits">Produits</a>
-            <a href="partenaires.html" id="link_partenaires">Partenaires</a>
-            <a href="contact.html" id="link_contact">Nous Contactez</a>
-        </nav>
-        <div id="tools">
-            <input type="text" id="search" placeholder="Rechercher...">
-            <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
-            <a href="newsletter.html"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
-            <button id="panier"><img src="public/images/icon_panier.png" alt="Panier" title="Panier"></button>
+        <button id="mobile-menu-button" class="mobile-only">
+            <img src="public/images/menu-icon.svg" alt="Menu" id="menu-icon">
+        </button>
+        <div id="header-content">
+            <nav>
+                <a href="produits" id="link_produits">Produits</a>
+                <a href="partenaires" id="link_partenaires">Partenaires</a>
+                <a href="contact" id="link_contact">Nous Contactez</a>
+            </nav>
         </div>
+            <div id="tools">
+                <input type="text" id="search" placeholder="Rechercher...">
+                <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
+                <a href="newsletter"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
+                <button id="panier"><img src="public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
+            </div>
+        
     </header>
+    <div class="panier-popup" id="panierPopup">
+        <div class="panier-header">
+            <h2 class="no-delay">Votre Panier</h2>
+            <button class="close-panier" id="closepanier">&times;</button>
+        </div>
+
+        <div class="panier-items" id="panierItems">
+            <p>Votre panier est vide</p>
+        </div>
+        
+        <div class="panier-footer"> <div class="panier-total">
+                Total: <span class="total-price" id="panierTotal">0.00</span>€
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" disabled>Passer la commande</button>
+        </div>
+    </div>

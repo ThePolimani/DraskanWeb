@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php'; // Fichier de configuration contenant la connexion à la base de données
+require_once '../config.php'; // Fichier de configuration contenant la connexion à la base de données
 
 // Récupérer les catégories
 $categories = $pdo->query("SELECT id, nom FROM categories")->fetchAll(PDO::FETCH_ASSOC);
