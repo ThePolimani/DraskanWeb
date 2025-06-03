@@ -278,4 +278,17 @@ h1 {
     #accueil_1{
         flex-direction: column;
     }
+    .partners {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .partners {
+        flex-direction: column;
+    }
+    
+    #accueil_1 img {
+        width: 100%;
+    }
 }
