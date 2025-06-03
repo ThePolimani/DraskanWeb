@@ -1,11 +1,10 @@
 <?php
 $pageSpecificCSS = 'accueil.css'; // Changez cette variable selon la page
 $pageSpecificJS = 'accueil.js'; // Changez cette variable selon la page
-$isIndex = true;
 
-include_once 'app/views/common/header.php';
+include_once '../app/views/common/header.php';
 
-require_once 'app/config.php';
+require_once '../app/config.php';
 
 try {
     $stmt = $pdo->query("SELECT logo_url FROM partenaires");
@@ -16,5 +15,5 @@ try {
     exit;
 }
 
-include_once 'app/views/accueil.php';
-include_once 'app/views/common/footer.php';
+include_once '../app/views/produits.php';
+include_once '../app/views/common/footer.php';

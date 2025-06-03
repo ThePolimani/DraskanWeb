@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="<?= rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/' ?>"> <!-- Base URL dynamique pour les index -->
+    <?php if (!empty($isIndex)): ?>
+        <base href="<?= rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/' ?>"> <!-- Base URL dynamique pour les index -->
+    <?php endif; ?>
     <title>Draskan</title>
 	<meta name="description" content="Draskan : La Nature au bout des lèvres. Voir la liste de nos produits.">
 	<meta name="keywords" content="Bière, Draskan, alcool, Bière Viking">
