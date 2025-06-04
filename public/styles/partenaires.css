@@ -4,19 +4,16 @@
   box-sizing: border-box;
 }
 
-body {
-  
-    background-size: cover;
-    
-    background-image: url('../images/fondpartenaires.jpg');
-
-}
-
 main {
   text-align: center;
   font-family: 'Lancelot', sans-serif;
+  background-size: cover;
+  background-image: url('../images/fondpartenaires.jpg');
 }
 
+a:hover {
+    text-decoration: none;
+}
 
 .partners {
   display: flex;

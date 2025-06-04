@@ -6,7 +6,7 @@
     <?php if (!empty($isIndex)): ?>
         <base href="<?= rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/' ?>"> <!-- Base URL dynamique pour les index -->
     <?php endif; ?>
-    <title>Draskan</title>
+    <title>Draskan<?php if (!empty($pageTitle)): ?> - <?= $pageTitle ?><?php endif; ?></title>
 	<meta name="description" content="Draskan : La Nature au bout des lèvres. Voir la liste de nos produits.">
 	<meta name="keywords" content="Bière, Draskan, alcool, Bière Viking">
 	<link rel="icon" href="public/images/favicon.png" type="image/x-icon">
@@ -60,22 +60,22 @@
     </div>
 
     <header class="animatedList" data-animation="fadeIn" data-reset-delay data-leaf-only>
-        <a href=""><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
+        <a href="/"><img src="public/images/draskan_texte_logo_blanc.png" alt="Logo Draskan" title="Accueil" id="logo_header"></a>
         <button id="mobile-menu-button" class="mobile-only">
-            <img src="public/images/menu-icon.svg" alt="Menu" id="menu-icon">
+            <img src="/public/images/menu-icon.svg" alt="Menu" id="menu-icon">
         </button>
         <div id="header-content">
             <nav>
-                <a href="produits" id="link_produits">Produits</a>
-                <a href="partenaires" id="link_partenaires">Partenaires</a>
-                <a href="contact" id="link_contact">Nous Contactez</a>
+                <a href="/produits" id="link_produits">Produits</a>
+                <a href="/partenaires" id="link_partenaires">Partenaires</a>
+                <a href="/contact" id="link_contact">Nous Contactez</a>
             </nav>
         </div>
             <div id="tools">
                 <input type="text" id="search" placeholder="Rechercher...">
-                <button id="searchButton"><img src="public/images/icon-recherche.svg" alt=""></button>
-                <a href="newsletter"><img src="public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
-                <button id="panier"><img src="public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
+                <button id="searchButton"><img src="/public/images/icon-recherche.svg" alt=""></button>
+                <a href="newsletter"><img src="/public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
+                <button id="panier"><img src="/public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
             </div>
         
     </header>

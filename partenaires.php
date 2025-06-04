@@ -1,5 +1,6 @@
 <?php
 $pageSpecificCSS = 'partenaires.css';
+$pageTitle = 'Partenaires'; // Changez cette variable selon la page ("Draskan - " sera ajouté avant ce titre)
 
 include_once 'app/views/common/header.php';
 require_once 'app/config.php';

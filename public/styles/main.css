@@ -613,6 +613,23 @@ footer img {
 	}
 }
 
+.fadeInLeftLess {
+    opacity: 0;
+    animation: fadeInLeftLess 1.5s ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInLeftLess {
+	from {
+		transform: translateX(-5%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
 .fadeInRight {
     opacity: 0;
     animation: fadeInRight 2s ease;

@@ -1,9 +1,46 @@
-.produits-container {
+        main .container {
+            max-width: 1200px;
+            margin: 0 10%;
+        }
+        .filtres {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .filtres h2 {
+            margin-top: 0;
+        }
+        .filtre-group {
+            margin-bottom: 15px;
+        }
+        main label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        main select, input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        main button {
+            background-color: #2a6496;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        main button:hover {
+            background-color: #1d4f7a;
+        }
+        .produits-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
         .produit-card {
             background: white;
@@ -33,11 +70,37 @@
             font-weight: bold;
             color: #2a6496;
         }
-        a {
+        .produit-categorie {
+            font-size: 14px;
+            color: #666;
+        }
+        main a {
             text-decoration: none;
         }
-        h1 {
+        main h1 {
             text-align: center;
             color: #333;
             margin-bottom: 30px;
+        }
+        .produit-detail {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .produit-detail-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2a6496;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
         }

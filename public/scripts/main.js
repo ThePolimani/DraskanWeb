@@ -57,18 +57,26 @@ function initAnimations() {
 
         function shouldAnimate(element) {
             if (element.classList.contains('no-animation')) return false;
-            if (onlyLeaves) {
-                // Un "leaf" est un élément qui n'a pas d'enfants ou dont tous les enfants sont 'no-animation'
+            if (onlyLeaves) { // 'onlyLeaves' est vrai si data-leaf-only est présent
                 let hasAnimatableChildren = false;
                 for (const child of element.children) {
-                    if (!child.classList.contains('no-animation')) { // On ne considère pas les enfants 'no-animation' comme bloquant le parent.
-                        // Si l'enfant a lui-même une data-animation, il sera traité, donc le parent n'est pas une feuille.
-                        // Ou si l'enfant est un candidat potentiel (pas no-animation).
+                    // Si l'enfant est un <br>, on l'ignore pour cette vérification
+                    if (child.tagName === 'BR') { // ou child.tagName.toUpperCase() === 'BR' pour être sûr
+                        continue;
+                    }
+                    // Si l'enfant n'est PAS un <br> ET qu'il n'a PAS 'no-animation',
+                    // alors le parent a un enfant "actif" et ne doit pas être animé comme feuille.
+                    if (!child.classList.contains('no-animation')) {
                         hasAnimatableChildren = true;
-                        break;
+                        break; 
                     }
                 }
-                if (hasAnimatableChildren) return false;
+                // Si hasAnimatableChildren est vrai, cela signifie que 'element' a des enfants (autres que <br> ou no-animation)
+                // qui devraient être animés ou qui le rendent non-feuille.
+                // Donc, 'element' lui-même ne doit pas être animé.
+                if (hasAnimatableChildren) {
+                    return false;
+                }
             }
             return true;
         }
@@ -76,10 +84,16 @@ function initAnimations() {
         const elementsToAnimate = [];
         if (onlyLeaves) {
             const collectLeaves = (element) => {
+                if (element.tagName === 'BR') {
+                    return;
+                }
                 let isLeaf = true;
                 // Vérifier si certains enfants sont eux-mêmes des candidats à l'animation
                 // Si un enfant est un candidat, alors l'élément actuel n'est pas une feuille.
                 for (const child of element.children) {
+                    if (child.tagName === 'BR') {
+                        continue;
+                    }
                     if (!child.classList.contains('no-animation') && child.matches('[data-animation], .animatedList *')) { // Critère plus précis
                          // Si l'enfant est lui-même une 'animatedList', on ne le considère pas comme bloquant son parent leaf,
                          // car la liste enfant gérera ses propres animations.
@@ -175,7 +189,7 @@ function initAnimations() {
 
 document.addEventListener('DOMContentLoaded', initAnimations);
 
-let defaultTranslations = {}; // Stock anglais
+let defaultTranslations = {}; // Stock français par défaut
 let currentTranslations = {}; // Stock langue actuelle
 
 async function fetchTranslations(lang) {
@@ -213,11 +227,14 @@ function updateTexts() {
 
 function switchLanguage(lang) {
   loadLanguage(lang);
+  // Mettre à jour l'attribut lang de la balise html
+  document.documentElement.setAttribute('lang', lang);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
     const userLang = navigator.language.startsWith('en') ? 'en' : 'fr';
     loadLanguage(userLang); // Assurez-vous que cette fonction est définie ailleurs si besoin
+    document.documentElement.setAttribute('lang', userLang);
 
     const panierButton = document.getElementById('panier');
     const panierPopup = document.getElementById('panierPopup');
