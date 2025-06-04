@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Calque_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336.26 340.85">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: none;
-        stroke: #fff;
-        stroke-miterlimit: 10;
-        stroke-width: 45px;
-      }
-    </style>
-  </defs>
-  <circle class="cls-1" cx="131.95" cy="131.74" r="106.3"/>
-  <line class="cls-1" x1="201.3" y1="206.98" x2="317.11" y2="322.78"/>
-</svg>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="329.86922" height="335.75059" viewBox="0,0,329.86922,335.75059"><g transform="translate(-75.01999,-12.51499)"><g data-paper-data="{&quot;isPaintingLayer&quot;:true}" fill="none" fill-rule="nonzero" stroke="#ffffff" stroke-width="45" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" style="mix-blend-mode: normal"><path d="M97.52,141.315c0,-58.70787 47.59213,-106.3 106.3,-106.3c58.70787,0 106.3,47.59213 106.3,106.3c0,58.70787 -47.59213,106.3 -106.3,106.3c-58.70787,0 -106.3,-47.59213 -106.3,-106.3z"/><path d="M388.98,332.35499l-115.81,-115.8"/></g></g></svg>

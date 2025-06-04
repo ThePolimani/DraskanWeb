@@ -138,30 +138,40 @@ button {
 #tools {
     align-items: center;
     display: flex;
-    gap: 30px;
 }
 
 #search {
-    border-radius: 50px;
+    border-radius: 50px 0 0 50px;
     padding: 10px;
     height: 35px;
     width: 260px;
+    border: none;
 }
 
 #searchButton img {
-    height: 30px;
+    height: 35px;
     width: auto;
+    background-color: #69362d;
+    border-radius: 0 50px 50px 0;
+    margin-top: 4px;
+    padding: 6px 12px;
+}
+
+#searchButton img:hover {
+    cursor: pointer;
 }
 
 #newsletter {
     height: 30px;
     width: auto;
     transition: 0.08s;
+    margin-left: 30px;
 }
 
 #panier {
     margin-right: 3vw;
     transition: 0.08s;
+    margin-left: 30px;
 }
 
 #panier:hover, #newsletter:hover {
@@ -201,8 +211,12 @@ button {
         width: 180px;
     }
     
-    #tools {
-        gap: 15px;
+    #newsletter {
+        margin-left: 15px;
+    }
+
+    #panier {
+        margin-left: 15px;
     }
 }
 
@@ -242,6 +256,14 @@ button {
     #search {
         display: none;
     }
+
+    #searchButton img {
+        height: 30px;
+        padding: 0;
+        margin-top: 0;
+        border-radius: unset;
+        background-color: unset;
+    }   
 
     #tools {
         margin-left: auto;
