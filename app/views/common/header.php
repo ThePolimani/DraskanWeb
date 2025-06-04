@@ -23,7 +23,8 @@
     <?php if (!empty($pageSpecificJS)): ?>
         <script src="public/scripts/<?= $pageSpecificJS ?>"></script>
     <?php endif; ?>
-	<!--<link rel="apple-touch-icon" href="/public/images/app-icon.png">-->
+	<link rel="apple-touch-icon" href="/public/images/app-icon.png">
+    <meta property="og:image" content="/public/images/fav-image.png">
 </head>
 <body>
     <div id="ageVerificationModal">
