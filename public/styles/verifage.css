@@ -19,7 +19,7 @@
 
 #ageVerificationContent {
     font-family: Lancelot-Regular;
-    background-color: white;
+    background-color: #e6cfad;
     padding: 70px 50px;
     border-radius: 10px;
     width: 480px;
@@ -37,14 +37,14 @@ select, #confirmAge {
 }
 
 #confirmAge {
-    background-color: #4CAF50;
+    background-color: #69362d;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 #confirmAge:hover {
-    background-color: #45a049;
+    background-color: #5c2f28;
 }
 
 .error {
