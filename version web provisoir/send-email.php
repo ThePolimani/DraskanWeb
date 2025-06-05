@@ -1,3 +1,62 @@
+<?php
+header('Content-Type: application/json');
+require_once 'config.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['error' => 'Méthode non autorisée']);
+    exit;
+}
+
+$data = json_decode(file_get_contents('php://input'), true);
+$email = $data['email'] ?? null;
+
+if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Email invalide']);
+    exit;
+}
+
+if (isUnsubscribed($email)) {
+    echo json_encode([
+        'error' => 'Cet email a demandé à ne plus recevoir de messages',
+        'blocked' => true
+    ]);
+    exit;
+}
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Inclure les fichiers de PHPMailer
+require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
+
+// Créer une instance de PHPMailer
+$mail = new PHPMailer(true);
+
+try {
+    // Paramètres du serveur SMTP OVH
+    $mail->isSMTP();
+    $mail->Host = 'ssl0.ovh.net';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'noreply@vamros.net';
+    $mail->Password = 'NoReplyVE*1068711Vamros';
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+
+    // Informations de l'expéditeur
+    $mail->setFrom('noreply@vamros.net', 'Draskan');
+    
+    // Destinataire
+    $mail->addAddress($email);
+
+    // Contenu de l'e-mail
+    $mail->isHTML(true);
+    $mail->CharSet = 'UTF-8';
+    $mail->Subject = 'Newsletter Draskan';
+    $mail->Body = '
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -74,3 +133,21 @@
     </div>
 </body>
 </html>
+';
+    $mail->AltBody = 'newsletter Draskan - Ceci est une preuve de concept pour la newsletter de Draskan.';
+
+    // Envoyer l'e-mail
+    $mail->send();
+    echo json_encode([
+        'success' => true,
+        'message' => 'Email envoyé avec succès',
+        'email' => $email
+    ]);
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode([
+        'error' => 'Erreur lors de l\'envoi de l\'email',
+        'email' => $email
+    ]);
+}
+?>
