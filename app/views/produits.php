@@ -89,7 +89,7 @@
                 </form>
             </div>
             
-            <div class="produits-container">
+            <div class="produits-container animatedList" data-animation="fadeIn" data-delay-step="0.05" data-reset-delay>
                 <?php foreach ($produits as $produit): ?>
                     <a href="?id=<?= htmlspecialchars($produit['id']) ?>">
                         <div class="produit-card">

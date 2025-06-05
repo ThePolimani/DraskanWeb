@@ -1,6 +1,6 @@
         main .container {
             max-width: 1200px;
-            margin: 0 10%;
+            margin: 0 10% 80px;
         }
         .filtres {
             background: white;
@@ -48,17 +48,20 @@
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
         }
         .produit-card:hover {
             transform: translateY(-5px);
         }
         .produit-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+            width: fit-content;
+            height: 250px;
         }
         .produit-info {
             padding: 15px;
+            width: 100%;
         }
         .produit-nom {
             font-size: 18px;
@@ -79,8 +82,8 @@
         }
         main h1 {
             text-align: center;
-            color: #333;
-            margin-bottom: 30px;
+            color: #fff;
+            margin: 30px 0;
         }
         .produit-detail {
             background: white;

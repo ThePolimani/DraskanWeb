@@ -1,0 +1,138 @@
+.payment-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px; /* Limite la largeur pour une meilleure lisibilité */
+        }
+
+        main h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .order-summary, .payment-info, .customer-info {
+            margin-bottom: 30px;
+        }
+
+        /* Styles pour les articles du panier (similaires à ton panierPopup) */
+        main #panierItems {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-height: 400px; /* Si la liste est longue */
+            overflow-y: auto; /* Permet le défilement */
+        }
+
+        main .panier-item { /* Doit correspondre au style de ton panierPopup */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        main .panier-item:last-child {
+            border-bottom: none;
+        }
+        main .item-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 1em;
+        }
+        main .item-info p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+        main .item-actions {
+            display: flex;
+            align-items: center;
+        }
+        main .item-actions .quantity-btn, main .item-actions .remove-item {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        main .item-actions .quantity-btn.minus {
+            background-color: #ffc107;
+        }
+        main .item-actions .remove-item {
+            background-color: #dc3545;
+        }
+        main .item-actions .quantity-btn:disabled,
+        main .item-actions .quantity-btn.disabled-stock { /* Classe de ton JS pour stock max */
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        main .item-actions .item-quantity {
+            margin: 0 8px;
+            font-weight: bold;
+        }
+
+        .total-section {
+            text-align: right;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        main #panierTotal { /* Assure-toi que cet ID est bien celui utilisé par updateTotalPriceAnimated */
+             color: #28a745; /* Vert pour le total */
+        }
+
+
+        /* Styles pour le formulaire */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"] {
+            width: calc(100% - 22px); /* Ajuste pour le padding et la bordure */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .payment-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .pay-button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .pay-button:hover {
+            background-color: #218838;
+        }
+        .pay-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Animation pour nouvel item (si tu veux la réutiliser ici) */
+        .new-item-animation {
+            animation: newItemAdded 0.5s ease-out;
+        }
+        @keyframes newItemAdded {
+            from { transform: scale(0.9); opacity: 0.5; }
+            to { transform: scale(1); opacity: 1; }
+        }

@@ -145,20 +145,37 @@ button {
     padding: 10px;
     height: 35px;
     width: 260px;
-    border: none;
+    background-color: #1d1d1dcf;
+    border: solid #ffffff71 2px;
+    color: #ffffff;
+}
+
+#search:focus {
+    outline: none;
+    border: solid #fff 2px;
+}
+
+#search::placeholder {
+    color: #ffffff71;
 }
 
 #searchButton img {
     height: 35px;
     width: auto;
-    background-color: #69362d;
+    background-color: #76767686;
     border-radius: 0 50px 50px 0;
     margin-top: 4px;
     padding: 6px 12px;
+    border-top: solid #ffffff71 2px;
+    border-right: solid #ffffff71 2px;
+    border-bottom: solid #ffffff71 2px;
 }
 
 #searchButton img:hover {
     cursor: pointer;
+    border-top: solid #fff 2px;
+    border-right: solid #fff 2px;
+    border-bottom: solid #fff 2px;
 }
 
 #newsletter {
@@ -263,6 +280,7 @@ button {
         margin-top: 0;
         border-radius: unset;
         background-color: unset;
+        border: none;
     }   
 
     #tools {
