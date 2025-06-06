@@ -76,13 +76,26 @@ h1 {
     text-shadow: 2px 2px 8px black;
 }
 
-#accueil_4 {
+#accueil_4 img {
+    height: 250px;
+    border-radius: 15px;
+}
+
+#accueil_4 img:hover {
+    cursor: pointer;
+}
+
+#accueil_4 h2{
+    margin: 90px 0 40px;
+}
+
+#accueil_5 {
     width: 100%;
     text-align: center;
     margin: 100px 0 80px;
 }
 
-#accueil_4 h2 {
+#accueil_5 h2 {
     margin-bottom: 30px;
 }
 
@@ -93,9 +106,12 @@ h1 {
     border-radius: 20px;
 }
 
-.partner-card:hover {
-    transform: scale(1.05);
+.partner-card {
     transition: transform 0.3s ease-in-out;
+}
+
+.partner-card:hover {
+    transform: scale(1.05); 
 }
 
 .partners {
@@ -296,6 +312,10 @@ h1 {
     .product {
         min-width: 220px;
         padding: 1.3rem;
+    }
+    #accueil_4 img {
+        height: unset;
+        width: 90vw;
     }
 }
 

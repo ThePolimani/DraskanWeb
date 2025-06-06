@@ -69,6 +69,7 @@
             <nav>
                 <a href="produits" id="link_produits">Produits</a>
                 <a href="partenaires" id="link_partenaires">Partenaires</a>
+                <a href="apropos" id="link_apropos">A Propos</a>
                 <a href="contact" id="link_contact">Nous Contactez</a>
             </nav>
         </div>

@@ -36,6 +36,10 @@
         </div>
     </div>
     <div id="accueil_4" class="animatedList" data-animation="fadeInLeft" data-reset-delay data-leaf-only>
+        <h2>Notre prochain évenement :</h2>
+        <img src="public/images/banniere_festival.png" alt="Bannière du festival" data-animation="fadeIn">
+    </div>
+    <div id="accueil_5" class="animatedList" data-animation="fadeInLeft" data-reset-delay data-leaf-only>
         <h2>Nos Partenaires :</h2>
         <div class="partners">
             <?php foreach ($partenaires as $partenaire): ?>
@@ -45,6 +49,4 @@
             <?php endforeach; ?>
         </div>
     </div>
-    <div id="accueil_5" class="animatedList" data-animation="fadeInLeft" data-reset-delay data-leaf-only>
-        
 </main>

@@ -121,7 +121,7 @@ header {
 
 header nav {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     margin-right: 30px;
 }
 
@@ -223,7 +223,7 @@ button {
 }
 
 /* Styles responsives */
-@media (max-width: 1078px) {
+@media (max-width: 1160px) {
     #search {
         width: 180px;
     }
@@ -237,7 +237,7 @@ button {
     }
 }
 
-@media (max-width: 944px) {
+@media (max-width: 1040px) {
     #header-content {
         position: fixed;
         top: 80px;
