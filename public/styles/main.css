@@ -322,7 +322,7 @@ button {
     width: 350px;
     height: auto;
     max-height: calc(100vh - 100px); /* Limite la hauteur et permet le scroll */
-    background: white;
+    background: #e6cfad;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     z-index: 999;
     padding: 20px;
@@ -420,6 +420,8 @@ button {
     border-radius: 3px;
     transition: background 0.2s;
     font-size: 20px;
+    border: solid 1px grey;
+
 }
 
 .quantity-btn:hover {
@@ -484,8 +486,8 @@ button {
 .checkout-btn {
     width: 100%;
     padding: 10px;
-    background-color: #245825; /* Couleur quand désactivé */
-    color: #666666;
+    background-color: #664a45; /* Couleur quand désactivé */
+    color: #727272;
     border: none;
     border-radius: 5px;
     cursor: not-allowed;
@@ -496,7 +498,7 @@ button {
 
 
 .checkout-btn:enabled {
-    background-color: #4CAF50; /* Couleur quand actif */
+    background-color: #69362d; /* Couleur quand actif */
     color: white;
     cursor: pointer;
 }
