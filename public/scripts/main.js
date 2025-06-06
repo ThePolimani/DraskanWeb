@@ -600,7 +600,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // --- NOUVEAU : Mettre à jour l'état visuel de TOUS les boutons "Ajouter au panier" sur la page ---
+    //  Mettre à jour l'état visuel de TOUS les boutons "Ajouter au panier" sur la page ---
     function updateAllAddToCartButtonsVisuals() {
         const allPageButtons = document.querySelectorAll('.add-to-panier');
         allPageButtons.forEach(button => {
