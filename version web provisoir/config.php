@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
 $dbname = 'cdce5547_2025_draskan';
-$username = 'cdce5547_admin_sql_draskan'; // Change selon ton setup
-$password = 'MMI4ever@BDD'; // Change selon ton setup
+$username = 'cdce5547_admin_sql_draskan';
+$password = 'MMI4ever@BDD';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password, [

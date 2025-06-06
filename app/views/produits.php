@@ -35,7 +35,6 @@
             <h1>Nos Produits</h1>
             
             <div class="filtres">
-                <h2>Filtres</h2>
                 <form method="get" action="">
                     <div>
                         <div class="filtre-group">
@@ -86,10 +85,12 @@
                         </div>
                     </div>
                     
-                    <button type="submit">Appliquer les filtres</button>
-                    <?php if (!empty($_GET)): ?>
-                        <a href="?" style="margin-left: 10px;">Réinitialiser</a>
-                    <?php endif; ?>
+                    <div>
+                        <button type="submit">Appliquer les filtres</button>
+                        <?php if (!empty($_GET)): ?>
+                            <a href="?" style="margin-left: 10px;">Réinitialiser</a>
+                        <?php endif; ?>
+                    </div>
                 </form>
             </div>
             

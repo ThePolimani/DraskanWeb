@@ -24,7 +24,7 @@ try {
     if ($stmt->fetch() === false) {
         // Ajoute à la liste de désinscription (email chiffré)
         $stmt = $pdo->prepare("INSERT INTO unsub (email, date_unsub) VALUES (:encryptedEmail, NOW())");
-        $stmt->bindParam(':encryptedEmail', $encryptedEmail);
+        $stmt->bindParam(':encryptedEmail', $encryptedEmail, PDO::PARAM_STR);
         $stmt->execute();
         $message = "Votre adresse email a été ajoutée à notre liste de désinscription.";
     } else {

@@ -3,21 +3,30 @@ main .container {
     margin: 0 10% 80px;
 }
 .filtres {
-    background: white;
+    background: #e6cfad;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-bottom: 20px;
-    color: black;
 }
-.filtres h2 {
-    margin-top: 0;
+.filtres form a {
+    color: black;
 }
 .filtre-group {
     margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
-.filtres form > :nth-child(2), .filtres form > :first-child {
+.filtres form > :nth-child(2), .filtres form > :first-child, .filtres form > :nth-child(3) {
     flex-direction: row;
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+.filtres form > :nth-child(3) {
+    align-items: center;
+    justify-content: center;
 }
 main label {
     display: block;

@@ -1,8 +1,8 @@
 <?php
 $host = 'vamrosr800.mysql.db';
 $dbname = 'vamrosr800';
-$username = 'vamrosr800'; // Change selon ton setup
-$password = 'SQLDBbiere64285'; // Change selon ton setup
+$username = 'vamrosr800';
+$password = 'SQLDBbiere64285';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password, [
@@ -36,9 +36,9 @@ function decryptEmail($encryptedEmail) {
 function isUnsubscribed($email) {
     global $pdo;
     $encryptedEmail = encryptEmail($email);
-    $stmt = $pdo->prepare("SELECT email FROM unsub WHERE email = :email");
-    $stmt->bindParam(':email', $encryptedEmail);
-    $stmt->execute();
-    return $stmt->fetch() !== false;
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM unsub WHERE email = :encryptedEmail");
+    $stmt->bindParam(':encryptedEmail', $encryptedEmail, PDO::PARAM_STR);
+    $stmt->execute(); 
+    return $stmt->fetchColumn() > 0;
 }
 ?>
