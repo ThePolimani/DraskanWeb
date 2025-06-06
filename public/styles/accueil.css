@@ -73,6 +73,7 @@ h1 {
     font-family: "Lancelot", sans-serif;
     font-size: 80px;
     font-weight: normal;
+    text-shadow: 2px 2px 8px black;
 }
 
 #accueil_4 {
@@ -90,6 +91,11 @@ h1 {
     height: auto;
     margin: 20px;
     border-radius: 20px;
+}
+
+.partner-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
 }
 
 .partners {
@@ -277,6 +283,9 @@ h1 {
     }
     #accueil_1{
         flex-direction: column;
+    }
+    #accueil_1 div {
+        margin-top: 50px;
     }
     .partners {
         padding: 0;

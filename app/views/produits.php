@@ -37,49 +37,53 @@
             <div class="filtres">
                 <h2>Filtres</h2>
                 <form method="get" action="">
-                    <div class="filtre-group">
-                        <label for="tri">Trier par:</label>
-                        <select name="tri" id="tri">
-                            <option value="">Date d'ajout (récent)</option>
-                            <option value="prix_asc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'prix_asc') ? 'selected' : '' ?>>Prix (croissant)</option>
-                            <option value="prix_desc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'prix_desc') ? 'selected' : '' ?>>Prix (décroissant)</option>
-                            <option value="nom_asc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'nom_asc') ? 'selected' : '' ?>>Nom (A-Z)</option>
-                            <option value="nom_desc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'nom_desc') ? 'selected' : '' ?>>Nom (Z-A)</option>
-                            <option value="alcool_asc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'alcool_asc') ? 'selected' : '' ?>>Degré alcool (croissant)</option>
-                            <option value="alcool_desc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'alcool_desc') ? 'selected' : '' ?>>Degré alcool (décroissant)</option>
-                        </select>
+                    <div>
+                        <div class="filtre-group">
+                            <label for="tri">Trier par:</label>
+                            <select name="tri" id="tri">
+                                <option value="">Date d'ajout (récent)</option>
+                                <option value="prix_asc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'prix_asc') ? 'selected' : '' ?>>Prix (croissant)</option>
+                                <option value="prix_desc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'prix_desc') ? 'selected' : '' ?>>Prix (décroissant)</option>
+                                <option value="nom_asc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'nom_asc') ? 'selected' : '' ?>>Nom (A-Z)</option>
+                                <option value="nom_desc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'nom_desc') ? 'selected' : '' ?>>Nom (Z-A)</option>
+                                <option value="alcool_asc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'alcool_asc') ? 'selected' : '' ?>>Degré alcool (croissant)</option>
+                                <option value="alcool_desc" <?= (!empty($_GET['tri']) && $_GET['tri'] == 'alcool_desc') ? 'selected' : '' ?>>Degré alcool (décroissant)</option>
+                            </select>
+                        </div>
+
+                        <div class="filtre-group">
+                            <label for="categorie">Catégorie:</label>
+                            <select name="categorie" id="categorie">
+                                <option value="">Toutes les catégories</option>
+                                <?php foreach ($categories as $categorie): ?>
+                                    <option value="<?= $categorie['id'] ?>" <?= (!empty($_GET['categorie']) && $_GET['categorie'] == $categorie['id']) ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($categorie['nom']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
                     
-                    <div class="filtre-group">
-                        <label for="categorie">Catégorie:</label>
-                        <select name="categorie" id="categorie">
-                            <option value="">Toutes les catégories</option>
-                            <?php foreach ($categories as $categorie): ?>
-                                <option value="<?= $categorie['id'] ?>" <?= (!empty($_GET['categorie']) && $_GET['categorie'] == $categorie['id']) ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($categorie['nom']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    
-                    <div class="filtre-group">
-                        <label for="prix_min">Prix minimum (€):</label>
-                        <input type="number" name="prix_min" id="prix_min" min="0" step="0.01" value="<?= !empty($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : '' ?>">
-                    </div>
-                    
-                    <div class="filtre-group">
-                        <label for="prix_max">Prix maximum (€):</label>
-                        <input type="number" name="prix_max" id="prix_max" min="0" step="0.01" value="<?= !empty($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : '' ?>">
-                    </div>
-                    
-                    <div class="filtre-group">
-                        <label for="alcool_min">Degré d'alcool minimum (%):</label>
-                        <input type="number" name="alcool_min" id="alcool_min" min="0" max="100" step="0.1" value="<?= !empty($_GET['alcool_min']) ? htmlspecialchars($_GET['alcool_min']) : '' ?>">
-                    </div>
-                    
-                    <div class="filtre-group">
-                        <label for="volume_min">Volume minimum (ml):</label>
-                        <input type="number" name="volume_min" id="volume_min" min="0" value="<?= !empty($_GET['volume_min']) ? htmlspecialchars($_GET['volume_min']) : '' ?>">
+                    <div>
+                        <div class="filtre-group">
+                            <label for="prix_min">Prix min (€):</label>
+                            <input type="number" name="prix_min" id="prix_min" min="0" step="1" value="<?= !empty($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : '' ?>">
+                        </div>
+                                    
+                        <div class="filtre-group">
+                            <label for="prix_max">Prix max (€):</label>
+                            <input type="number" name="prix_max" id="prix_max" min="0" step="1" value="<?= !empty($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : '' ?>">
+                        </div>
+                                    
+                        <div class="filtre-group">
+                            <label for="alcool_min">Degré d'alcool min (%):</label>
+                            <input type="number" name="alcool_min" id="alcool_min" min="0" max="100" step="0.1" value="<?= !empty($_GET['alcool_min']) ? htmlspecialchars($_GET['alcool_min']) : '' ?>">
+                        </div>
+                                    
+                        <div class="filtre-group">
+                            <label for="volume_min">Volume min (ml):</label>
+                            <input type="number" name="volume_min" id="volume_min" min="0" value="<?= !empty($_GET['volume_min']) ? htmlspecialchars($_GET['volume_min']) : '' ?>">
+                        </div>
                     </div>
                     
                     <button type="submit">Appliquer les filtres</button>
