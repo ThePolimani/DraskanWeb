@@ -44,7 +44,7 @@
         <div class="partners">
             <?php foreach ($partenaires as $partenaire): ?>
             <div class="partner-card">
-                <a href="partenaires"><img src="<?= htmlspecialchars($partenaire['logo_url']) ?>" alt="<?= htmlspecialchars($partenaire['nom']) ?>" class="partner-logo" /></a>
+                <a href="partenaires"><img src="<?= htmlspecialchars($partenaire['logo_url']) ?>" class="partner-logo" /></a>
             </div>
             <?php endforeach; ?>
         </div>
