@@ -250,6 +250,29 @@ document.addEventListener("DOMContentLoaded", function() {
     let priceAnimationFrameId = null;
     let productsWithStock = {}; // Pour stocker les infos des produits, y compris le stock
 
+    const searchField = document.getElementById('search');
+    const searchButton = document.getElementById('searchButton');
+
+    // Fonction pour lancer la recherche
+    function lancerRecherche() {
+        const query = searchField.value.trim(); // .trim() enlève les espaces au début et à la fin
+        if (query) {
+            // On construit l'URL de destination et on y redirige l'utilisateur
+            window.location.href = `/produits?recherche=${encodeURIComponent(query)}`;
+        }
+    }
+
+    // 1. Gérer le clic sur le bouton
+    searchButton.addEventListener('click', lancerRecherche);
+
+    // 2. Gérer l'appui sur la touche "Entrée" dans le champ de recherche
+    searchField.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Empêche le comportement par défaut de la touche Entrée
+            lancerRecherche();
+        }
+    });
+
     // --- NOUVEAU : Fonction pour récupérer les produits et leurs stocks ---
     async function initializeStore() {
         try {

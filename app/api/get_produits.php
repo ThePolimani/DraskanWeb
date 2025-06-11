@@ -9,7 +9,7 @@ header('Access-Control-Allow-Origin: *'); // Permet les appels depuis n'importe 
 
 try {
     // Préparer la requête SQL - AJOUT DE LA COLONNE 'stock'
-    $sql = "SELECT id, nom, prix, image_url, stock FROM produits ORDER BY id ASC"; // Ou un autre ordre que vous préférez
+    $sql = "SELECT id, nom, prix, image_url, stock FROM produits ORDER BY id ASC";
     
     $stmt = $pdo->query($sql);
     

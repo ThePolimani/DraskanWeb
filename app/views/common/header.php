@@ -73,13 +73,20 @@
                 <a href="/contact" id="link_contact">Nous Contactez</a>
             </nav>
         </div>
-            <div id="tools">
-                <input type="text" id="search" placeholder="Rechercher...">
-                <button id="searchButton"><img src="/public/images/icon-recherche.svg" alt=""></button>
-                <a href="newsletter"><img src="/public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
-                <button id="panier"><img src="/public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
-            </div>
-        
+        <div id="tools">
+            <form action="/produits" method="get" class="form-recherche-header">
+                <input 
+                    type="search" 
+                    id="search" 
+                    name="recherche" 
+                    placeholder="Rechercher...">
+                <button type="submit" id="searchButton" title="Lancer la recherche">
+                    <img src="/public/images/icon-recherche.svg" alt="Rechercher">
+                </button>
+            </form>
+            <a href="newsletter"><img src="/public/images/icon-email.svg" alt="Newsletter" title="Newsletter" id="newsletter"></a>
+            <button id="panier"><img src="/public/images/panier/panier-0.png" alt="Panier" title="Panier" class="panier"></button>
+        </div>
     </header>
     <div class="panier-popup" id="panierPopup">
         <div class="panier-header">

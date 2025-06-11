@@ -178,6 +178,11 @@ button {
     border-bottom: solid #fff 2px;
 }
 
+.form-recherche-header {
+    display: flex;
+    align-items: center;
+}
+
 #newsletter {
     height: 30px;
     width: auto;

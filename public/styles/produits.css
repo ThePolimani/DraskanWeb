@@ -1,6 +1,9 @@
 main .container {
     max-width: 1200px;
     margin: 0 10% 80px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 .filtres {
     background: #e6cfad;
@@ -54,9 +57,10 @@ main button:hover {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
+    width: 100%;
 }
 .produit-card {
-    background: white;
+    background: linear-gradient(#69362D, #69362d6f);
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -64,6 +68,7 @@ main button:hover {
     align-items: center;
     display: flex;
     flex-direction: column;
+    padding: 20px 5px 5px;
 }
 .produit-card:hover {
     transform: translateY(-5px);
@@ -79,16 +84,25 @@ main button:hover {
 .produit-nom {
     font-size: 18px;
     margin: 0 0 10px 0;
-    color: #333;
+    color: #fff;
 }
 .produit-prix {
     font-size: 16px;
     font-weight: bold;
-    color: #2a6496;
+    color: #ffc6a0;
 }
 .produit-categorie {
     font-size: 14px;
-    color: #666;
+    color: #dadada;
+}
+.produit-detail .produit-prix {
+    font-size: 26px;
+    font-weight: bold;
+    color: #2c5557;
+}
+.produit-detail .produit-categorie {
+    font-size: 14px;
+    color: #7a3f3f;
 }
 main a {
     text-decoration: none;
@@ -99,24 +113,49 @@ main h1 {
     margin: 30px 0;
 }
 .produit-detail {
-    background: white;
+    background-color: #e6cfad;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-bottom: 20px;
 }
+.produit-detail h1 {
+    color: black;
+    font-family: "Lancelot", sans-serif;
+    font-size: 60px;
+    margin: 10px 0 0;
+}
 .produit-detail-image {
     max-width: 100%;
     height: auto;
     display: block;
-    margin: 0 auto 20px;
+    margin: 40px;
+}
+.produit-detail-content {
+    display: flex;
+    flex-direction: row;
+    margin: 0 60px;
+    gap: 60px;
+}
+#produit-detail-info {
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+    padding: 70px 0 0;
 }
 .back-link {
     display: inline-block;
-    margin-bottom: 20px;
-    color: #2a6496;
+    margin: 20px 0;
+    color: #153c5f;
     text-decoration: none;
+    padding: 10px;
+    background-color: #e6cfad;
+    border-radius: 8px;
 }
 .back-link:hover {
     text-decoration: underline;
+}
+.recherche-principale {
+    align-items: baseline;
+    margin-bottom: 15px;
 }
