@@ -651,4 +651,5 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialisation du magasin (chargement des produits et mise à jour de l'UI)
     initializeStore();
     // Les appels initiaux à updatePanierCount et updateCheckoutButton sont maintenant gérés dans initializeStore -> updatepanierDisplay
+    window.addTopanier = addTopanier;
 });

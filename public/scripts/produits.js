@@ -8,11 +8,6 @@ if (produitContainer) {
         if (event.target.classList.contains('add-to-panier')) {
             const button = event.target;
             const id = button.getAttribute('data-id');
-            if (!productsWithStock[id]) {
-                console.error("Info produit non chargée pour ID:", id);
-                alert("Erreur : information produit non disponible.");
-                return;
-            }
             // Vérifier si le bouton est désactivé (signifiant stock épuisé ou limite atteinte)
             if (button.disabled) {
                 // Optionnel : feedback visuel (ex: secouer le bouton, tooltip)
@@ -32,11 +27,6 @@ if (produitInfoContainer) {
         if (event.target.classList.contains('add-to-panier')) {
             const button = event.target;
             const id = button.getAttribute('data-id');
-            if (!productsWithStock[id]) {
-                console.error("Info produit non chargée pour ID:", id);
-                alert("Erreur : information produit non disponible.");
-                return;
-            }
             // Vérifier si le bouton est désactivé (signifiant stock épuisé ou limite atteinte)
             if (button.disabled) {
                 // Optionnel : feedback visuel (ex: secouer le bouton, tooltip)
