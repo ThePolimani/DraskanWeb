@@ -1,5 +1,6 @@
 <?php
 $pageSpecificCSS = 'mentions.css'; // Changez cette variable selon la page
+$pageTitle = 'Mentions Légales'; // Changez cette variable selon la page
 
 include_once 'app/views/common/header.php';
 
